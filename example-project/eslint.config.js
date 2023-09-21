@@ -1,7 +1,8 @@
 export default [
   {
+    files: ['index.js'],
     rules: {
-      semi: "error",
+      semi: ["error", "never"],
     }
   }
 ];

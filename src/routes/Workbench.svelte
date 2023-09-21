@@ -37,6 +37,9 @@
       throw new Error("Installation failed");
     }
 
+    const results = await runLint();
+    console.log({results})
+    // await runLint2();
     const shellProcess = await startShell();
     // TODO: redraw console content on resize
     // window.addEventListener("resize", () => {
@@ -58,6 +61,20 @@
       })
     );
     return installProcess.exit;
+  }
+
+  async function runLint() {
+    const lintProcess = await webcontainerInstance.spawn("npx", ["eslint", "--format",  "json-with-metadata", "--output-file", "./lint-result.json", "index.js"]);
+    lintProcess.output.pipeTo(
+      new WritableStream({
+        write(data) {
+          terminal.write(data);
+        },
+      })
+    );
+    await lintProcess.exit;
+    const resultsString = await webcontainerInstance.fs.readFile("/lint-result.json", "utf8");
+    return JSON.parse(resultsString)
   }
 
   async function startShell() {
