@@ -1,20 +1,36 @@
 <script lang="ts">
   import SplitPane from "svelte-pieces/ui/SplitPane.svelte";
-  import { WebContainer } from "@webcontainer/api";
+  import { WebContainer, type FileSystemTree } from "@webcontainer/api";
   import { onMount } from "svelte";
-  import { files } from "$lib/files";
   import Console from "./Console.svelte";
   import { terminal } from "$lib/terminal";
   import MonacoEditor from "$lib/monaco/MonacoEditor.svelte";
-  import type { Stub } from "$lib/monaco/types";
 
+  export let files: Record<string, string>;
   let webcontainerInstance: WebContainer;
+
+  function convertToFileSystemTree(files: Record<string, string>): FileSystemTree {
+    const tree: FileSystemTree = {};
+    for (const [path, content] of Object.entries(files)) {
+      const pathParts = path.split("/");
+      let current = tree;
+      for (const part of pathParts) {
+        if (part === pathParts[pathParts.length - 1]) {
+          current[part] = { file: { contents: content }};
+        }
+      }
+    }
+    console.log({files, tree})
+    return tree;
+  }
+
+  $: tree = convertToFileSystemTree(files);
 
   onMount(async () => {
     console.log("booting webcontainer");
     webcontainerInstance = await WebContainer.boot();
     console.log("mounting files");
-    await webcontainerInstance.mount(files);
+    await webcontainerInstance.mount(tree);
 
     const exitCode = await installDependencies();
     if (exitCode !== 0) {
@@ -67,40 +83,39 @@
     return shellProcess;
   }
 
-  async function writeIndexJS(content: string) {
-    await webcontainerInstance.fs.writeFile("/index.js", content);
-  }
-
-  const stub: Stub = {
-    name: "index.txt",
-    basename: "index.txt",
-    text: true,
-    contents:
-      "Monaco for viewing linted code w/ warnings+errors (can split to a diff viewer if there are any auto-fix rules)",
-  };
+  // async function writeIndexJS(content: string) {
+  //   await webcontainerInstance.fs.writeFile("/index.js", content);
+  // }
 </script>
 
 <SplitPane pos={40} min={0}>
-  <section class="h-full border-r flex flex-col" slot="a">
+  <section class="h-full border-r border-gray-600 flex flex-col" slot="a">
     <SplitPane type="vertical" pos={33} min={0}>
-      <section class="h-full border-r" slot="a">Tree</section>
-      <section class="h-full bg-gray-100" slot="b">
+      <section
+        class="h-full bg-gray-800 text-white border-b border-gray-600 p-3"
+        slot="a"
+      >
+        File Tree
+      </section>
+      <section class="h-full bg-black" slot="b">
         <MonacoEditor
-          {stub}
-          on:change={({ detail: stub }) => {
-            console.log({ stub });
+          filename="eslint.config.js"
+          content={tree["eslint.config.js"].file.contents}
+          on:change={({ detail: { filename, content } }) => {
+            console.log({ filename, content });
           }}
         />
       </section>
     </SplitPane>
   </section>
   <section class="h-full" slot="b">
-    <SplitPane type="vertical" pos={70} min={0}>
-      <section class="h-full bg-black border-b border-white" slot="a">
+    <SplitPane type="vertical" pos={75} min={0}>
+      <section class="h-full bg-black border-b border-gray-600" slot="a">
         <MonacoEditor
-          {stub}
-          on:change={({ detail: stub }) => {
-            console.log({ stub });
+          filename="index.js"
+          content={tree["index.js"].file.contents}
+          on:change={({ detail: { filename, content } }) => {
+            console.log({ filename, content });
           }}
         />
       </section>

@@ -6,14 +6,8 @@
   import { DEFAULT_MONACO_OPTIONS } from "./options";
   import { dev } from "$app/environment";
 
-  interface FileStub {
-    name: string; // path
-    basename: string; // filename
-    contents: string;
-    text: boolean;
-  }
-
-  export let stub: FileStub | null;
+  export let filename: string;
+  export let content: string;
   export let options: editor.IStandaloneEditorConstructionOptions = {};
 
   let monaco: typeof import("monaco-editor");
@@ -55,27 +49,27 @@
     });
   }
 
-  $: if (codeEditor && stub) {
+  $: if (codeEditor && filename && content) {
     const model = codeEditor.getModel();
-    if (model && stub.contents !== model.getValue()) {
-      monaco.editor.setModelLanguage(model, languageOfStub(stub));
+    if (model && content !== model.getValue()) {
+      monaco.editor.setModelLanguage(model, getLanguage(filename));
       model.applyEdits([
-        { range: model.getFullModelRange(), text: stub.contents },
+        { range: model.getFullModelRange(), text: content },
       ]);
     }
   }
 
-  const dispatch = createEventDispatcher<{ change: FileStub }>();
+  const dispatch = createEventDispatcher<{ change: { filename: string, content: string } }>();
+  
   function emitChange() {
-    if (!stub) return;
     dispatch("change", {
-      ...stub,
-      contents: codeEditor.getValue(),
+      filename,
+      content: codeEditor.getValue(),
     });
   }
 
-  function languageOfStub(stub: FileStub) {
-    const extension = stub.basename.split(".").pop() as string;
+  function getLanguage(filename: string) {
+    const extension = filename.split(".").pop() as string;
     return mapOfExtensionToLanguage[extension] || extension;
   }
 </script>
