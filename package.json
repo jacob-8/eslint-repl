@@ -13,6 +13,7 @@
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
 		"@unocss/svelte-scoped": "^0.56.0",
+		"@webcontainer/api": "^1.1.5",
 		"svelte": "^4.0.5",
 		"svelte-check": "^3.4.3",
 		"svelte-pieces": "^1.0.62",

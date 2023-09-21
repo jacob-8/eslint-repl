@@ -14,6 +14,9 @@ devDependencies:
   '@unocss/svelte-scoped':
     specifier: ^0.56.0
     version: 0.56.0
+  '@webcontainer/api':
+    specifier: ^1.1.5
+    version: 1.1.5
   svelte:
     specifier: ^4.0.5
     version: 4.2.1
@@ -639,6 +642,10 @@ packages:
       vite: 4.4.9
     transitivePeerDependencies:
       - rollup
+    dev: true
+
+  /@webcontainer/api@1.1.5:
+    resolution: {integrity: sha512-qMJyqO+A8+B8JKW/IW9KVQblAiEQwesq7ka6w8pgm6DXKWCQaPVOco4Zo7FxZ09OmBIX+lnXyfKbQzXiORLGJg==}
     dev: true
 
   /acorn@8.10.0:
