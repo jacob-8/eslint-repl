@@ -5,6 +5,8 @@
   import { files } from "$lib/files";
   import Console from "./Console.svelte";
   import { terminal } from "$lib/terminal";
+  import MonacoEditor from "$lib/monaco/MonacoEditor.svelte";
+  import type { Stub } from "$lib/monaco/types";
 
   let webcontainerInstance: WebContainer;
 
@@ -68,6 +70,14 @@
   async function writeIndexJS(content: string) {
     await webcontainerInstance.fs.writeFile("/index.js", content);
   }
+
+  const stub: Stub = {
+    name: "index.txt",
+    basename: "index.txt",
+    text: true,
+    contents:
+      "Monaco for viewing linted code w/ warnings+errors (can split to a diff viewer if there are any auto-fix rules)",
+  };
 </script>
 
 <SplitPane pos={40} min={0}>
@@ -75,17 +85,26 @@
     <SplitPane type="vertical" pos={33} min={0}>
       <section class="h-full border-r" slot="a">Tree</section>
       <section class="h-full bg-gray-100" slot="b">
-        Monaco for editing rules
+        <MonacoEditor
+          {stub}
+          on:change={({ detail: stub }) => {
+            console.log({ stub });
+          }}
+        />
       </section>
     </SplitPane>
   </section>
-  <section class="h-full bg-gray-200" slot="b">
+  <section class="h-full" slot="b">
     <SplitPane type="vertical" pos={70} min={0}>
-      <section class="h-full border-r" slot="a">
-        Monaco for viewing linted code w/ warnings+errors (can split to a diff
-        viewer if there are any auto-fix rules)
+      <section class="h-full bg-black border-b border-white" slot="a">
+        <MonacoEditor
+          {stub}
+          on:change={({ detail: stub }) => {
+            console.log({ stub });
+          }}
+        />
       </section>
-      <section class="h-full bg-red-100" slot="b">
+      <section class="h-full" slot="b">
         <Console />
       </section>
     </SplitPane>
