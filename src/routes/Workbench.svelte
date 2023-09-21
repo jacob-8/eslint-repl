@@ -64,7 +64,7 @@
   }
 
   async function runLint() {
-    const lintProcess = await webcontainerInstance.spawn("npx", ["eslint", "--format",  "json-with-metadata", "--output-file", "./lint-result.json", "index.js"]);
+    const lintProcess = await webcontainerInstance.spawn("npx", ["eslint", "--format",  "json-with-metadata", "--output-file", "./lint-result.json", "Foo.svelte"]);
     lintProcess.output.pipeTo(
       new WritableStream({
         write(data) {
@@ -105,7 +105,7 @@
   // }
 </script>
 
-<SplitPane pos={40} min={0}>
+<SplitPane pos={30} min={0}>
   <section class="h-full border-r border-gray-600 flex flex-col" slot="a">
     <SplitPane type="vertical" pos={33} min={0}>
       <section
@@ -128,9 +128,11 @@
   <section class="h-full" slot="b">
     <SplitPane type="vertical" pos={75} min={0}>
       <section class="h-full bg-black border-b border-gray-600" slot="a">
+        <!-- filename="index.js"
+        content={tree["index.js"].file.contents} -->
         <MonacoEditor
-          filename="index.js"
-          content={tree["index.js"].file.contents}
+          filename="Foo.svelte"
+          content={tree["Foo.svelte"].file.contents}
           on:change={({ detail: { filename, content } }) => {
             console.log({ filename, content });
           }}
