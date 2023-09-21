@@ -2,19 +2,72 @@
   import SplitPane from "svelte-pieces/ui/SplitPane.svelte";
   import { WebContainer } from "@webcontainer/api";
   import { onMount } from "svelte";
-  import { files } from '$lib/files'
+  import { files } from "$lib/files";
+  import Console from "./Console.svelte";
+  import { terminal } from "$lib/terminal";
 
   let webcontainerInstance: WebContainer;
 
   onMount(async () => {
-    console.log('booting webcontainer');
+    console.log("booting webcontainer");
     webcontainerInstance = await WebContainer.boot();
-    console.log('mounting files');
+    console.log("mounting files");
     await webcontainerInstance.mount(files);
-    console.log('reading package.json');
-    const packageJSON = await webcontainerInstance.fs.readFile('package.json', 'utf-8');
-    console.log(packageJSON);
+
+    const exitCode = await installDependencies();
+    if (exitCode !== 0) {
+      throw new Error("Installation failed");
+    }
+
+    const shellProcess = await startShell();
+    // TODO: redraw console content on resize
+    // window.addEventListener("resize", () => {
+    //   fitAddon.fit();
+    //   shellProcess.resize({
+    //     cols: terminal.cols,
+    //     rows: terminal.rows,
+    //   });
+    // });
   });
+
+  async function installDependencies() {
+    const installProcess = await webcontainerInstance.spawn("npm", ["install"]);
+    installProcess.output.pipeTo(
+      new WritableStream({
+        write(data) {
+          terminal.write(data);
+        },
+      })
+    );
+    return installProcess.exit;
+  }
+
+  async function startShell() {
+    const shellProcess = await webcontainerInstance.spawn("jsh", {
+      terminal: {
+        cols: terminal.cols,
+        rows: terminal.rows,
+      },
+    });
+    shellProcess.output.pipeTo(
+      new WritableStream({
+        write(data) {
+          terminal.write(data);
+        },
+      })
+    );
+
+    const input = shellProcess.input.getWriter();
+    terminal.onData((data) => {
+      input.write(data);
+    });
+
+    return shellProcess;
+  }
+
+  async function writeIndexJS(content: string) {
+    await webcontainerInstance.fs.writeFile("/index.js", content);
+  }
 </script>
 
 <SplitPane pos={40} min={0}>
@@ -27,14 +80,14 @@
     </SplitPane>
   </section>
   <section class="h-full bg-gray-200" slot="b">
-    <SplitPane type="vertical" pos={90} min={0}>
+    <SplitPane type="vertical" pos={70} min={0}>
       <section class="h-full border-r" slot="a">
-        Monaco for viewing linted code w/ warnings+errors (can split to a diff viewer if there are any auto-fix rules)
+        Monaco for viewing linted code w/ warnings+errors (can split to a diff
+        viewer if there are any auto-fix rules)
       </section>
       <section class="h-full bg-red-100" slot="b">
-        Terminal / ast
+        <Console />
       </section>
     </SplitPane>
   </section>
 </SplitPane>
-

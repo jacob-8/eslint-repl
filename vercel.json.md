@@ -1,0 +1,24 @@
+// Learn Svelte uses this - may be useful if needed
+
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "headers": [
+    {
+      "source": "_app/immutable/workers/(.*)",
+      "headers": [
+        {
+          "key": "cross-origin-opener-policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "cross-origin-embedder-policy",
+          "value": "require-corp"
+        },
+        {
+          "key": "cross-origin-resource-policy",
+          "value": "cross-origin"
+        }
+      ]
+    }
+  ]
+}
