@@ -27,7 +27,7 @@ if (import.meta.vitest) {
   };
 
   describe(splitIntoProjects, () => {
-    test('content...', () => {
+    test('basic', () => {
       expect(splitIntoProjects(rawProjects)).toMatchInlineSnapshot(`
         {
           "basic": {

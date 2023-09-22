@@ -30,11 +30,9 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 - https://webcontainers.io/api
 - [ESLint CLI](https://eslint.org/docs/latest/use/command-line-interface#-o---output-file)
 
-## POC TODO
-
-- Handle nest file structure
-- If new rule example, write code to run test and show output, run build, then run lint
+## BASIC TODOS TO GET STARTED
 
 - File tree
+- Save change
 - Use CodeMirror to show linting errors
 - Add AST explanation: https://www.mariokandut.com/how-to-write-custom-eslint-rule/
