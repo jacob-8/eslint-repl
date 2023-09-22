@@ -1,7 +1,6 @@
 {
   "name": "svelte",
   "type": "module",
-  "version": "0.0.0",
   "scripts": {
     "lint": "eslint ."
   },

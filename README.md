@@ -1,38 +1,41 @@
-# create-svelte
+# ESLint Workbench
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Learn how to use ESLint, and even write a few rules of your own with live feedback and testing.
 
-## Creating a project
+## CodeMirror
 
-If you're seeing this, you've probably already done this step. Congrats!
+- https://github.dev/sveltejs/learn.svelte.dev
+- https://www.sveltelab.dev/
+- https://github.com/sveltejs/svelte/tree/master/sites/svelte.dev/src/routes/(authed)/repl
+- https://github.dev/touchifyapp/svelte-codemirror-editor & https://touchifyapp.github.io/svelte-codemirror-editor
+- https://github.com/replit/codemirror-lang-svelte
+- https://codemirror.net/docs/ref/#lint
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+### TS autocomplete
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- https://discuss.codemirror.net/t/codemirror-6-and-typescript-lsp/3398/28
+- https://github.com/danilowoz/sandpack-tsserver/pull/5
+- https://github.com/codesandbox/sandpack/discussions/237
+- https://github.dev/prisma/text-editors
 
-## Developing
+## ESLint Playgrounds
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- https://eslint.org/play/
+- https://typescript-eslint.io/play
+- https://sveltejs.github.io/eslint-plugin-svelte/playground/
+- https://ota-meshi.github.io/eslint-plugin-vue-demo/
 
-```bash
-npm run dev
+## Other resources
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+- https://webcontainers.io/api
+- [ESLint CLI](https://eslint.org/docs/latest/use/command-line-interface#-o---output-file)
 
-## Building
+## POC TODO
 
-To create a production version of your app:
+- Toggle between examples in mini-docs
+- Handle nest file structure
+- If new rule example, write code to run test and show output, run build, then run lint
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- File tree
+- Use CodeMirror to show linting errors
+- Add AST explanation: https://www.mariokandut.com/how-to-write-custom-eslint-rule/

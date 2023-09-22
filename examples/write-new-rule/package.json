@@ -1,0 +1,36 @@
+{
+  "name": "eslint-plugin-if-newline",
+  "type": "module",
+  "version": "0.0.0",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "lint": "eslint .",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@typescript-eslint/utils": "^6.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.6.3",
+    "@typescript-eslint/parser": "^6.7.2",
+    "@typescript-eslint/rule-tester": "^6.7.2",
+    "eslint": "^8.49.0",
+    "eslint-define-config": "^1.23.0",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "unbuild": "^2.0.0",
+    "vitest": "^0.34.5"
+  }
+}
