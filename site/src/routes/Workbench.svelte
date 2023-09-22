@@ -1,28 +1,14 @@
 <script lang="ts">
   import SplitPane from "svelte-pieces/ui/SplitPane.svelte";
-  import { WebContainer, type FileSystemTree } from "@webcontainer/api";
+  import { WebContainer } from "@webcontainer/api";
   import { onMount } from "svelte";
   import Console from "./Console.svelte";
   import { terminal } from "$lib/terminal";
   import MonacoEditor from "$lib/monaco/MonacoEditor.svelte";
+  import { convertToFileSystemTree } from "./convertToFileSystemTree";
 
   export let files: Record<string, string>;
   let webcontainerInstance: WebContainer;
-
-  function convertToFileSystemTree(files: Record<string, string>): FileSystemTree {
-    const tree: FileSystemTree = {};
-    for (const [path, content] of Object.entries(files)) {
-      const pathParts = path.split("/");
-      let current = tree;
-      for (const part of pathParts) {
-        if (part === pathParts[pathParts.length - 1]) {
-          current[part] = { file: { contents: content }};
-        }
-      }
-    }
-    console.log({files, tree})
-    return tree;
-  }
 
   $: tree = convertToFileSystemTree(files);
 
@@ -38,7 +24,7 @@
     }
 
     const results = await runLint();
-    console.log({results})
+    console.log({ results });
     // await runLint2();
     const shellProcess = await startShell();
     // TODO: redraw console content on resize
@@ -64,7 +50,14 @@
   }
 
   async function runLint() {
-    const lintProcess = await webcontainerInstance.spawn("npx", ["eslint", "--format",  "json-with-metadata", "--output-file", "./lint-result.json", "Foo.svelte"]);
+    const lintProcess = await webcontainerInstance.spawn("npx", [
+      "eslint",
+      "--format",
+      "json-with-metadata",
+      "--output-file",
+      "./lint-result.json",
+      "Foo.svelte",
+    ]);
     lintProcess.output.pipeTo(
       new WritableStream({
         write(data) {
@@ -73,8 +66,11 @@
       })
     );
     await lintProcess.exit;
-    const resultsString = await webcontainerInstance.fs.readFile("/lint-result.json", "utf8");
-    return JSON.parse(resultsString)
+    const resultsString = await webcontainerInstance.fs.readFile(
+      "/lint-result.json",
+      "utf8"
+    );
+    return JSON.parse(resultsString);
   }
 
   async function startShell() {
@@ -103,16 +99,20 @@
   // async function writeIndexJS(content: string) {
   //   await webcontainerInstance.fs.writeFile("/index.js", content);
   // }
+
+  $: editingFilename = tree['index.js'] 
+    ? 'index.js' :
+    tree['Foo.svelte'] ? 'Foo.svelte' : 'if-newline.ts';
 </script>
 
 <SplitPane pos={30} min={0}>
   <section class="h-full border-r border-gray-600 flex flex-col" slot="a">
     <SplitPane type="vertical" pos={33} min={0}>
       <section
-        class="h-full bg-gray-800 text-white border-b border-gray-600 p-3"
+        class="h-full bg-gray-800 text-white border-b border-gray-600 p-3 overflow-x-auto"
         slot="a"
       >
-        File Tree
+        <pre>{JSON.stringify(files, null, 2)}</pre>
       </section>
       <section class="h-full bg-black" slot="b">
         <MonacoEditor
@@ -128,11 +128,9 @@
   <section class="h-full" slot="b">
     <SplitPane type="vertical" pos={75} min={0}>
       <section class="h-full bg-black border-b border-gray-600" slot="a">
-        <!-- filename="index.js"
-        content={tree["index.js"].file.contents} -->
         <MonacoEditor
-          filename="Foo.svelte"
-          content={tree["Foo.svelte"].file.contents}
+          filename={editingFilename}
+          content={tree[editingFilename].file.contents}
           on:change={({ detail: { filename, content } }) => {
             console.log({ filename, content });
           }}
