@@ -6,8 +6,6 @@
   let terminalHeight: number;
 
   onMount(async () => {
-    alert('loaded')
-
     terminal.open(terminalEl);
   });
 

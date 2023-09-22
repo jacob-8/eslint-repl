@@ -6,7 +6,7 @@
   export let data;
   $: projects = splitIntoProjects(data.projectsRaw);
   $: projectNames = Object.keys(projects);
-  $: activeProjectName = projectNames[1];
+  $: activeProjectName = data.projectName;
 </script>
 
 <div class="h-100vh">
@@ -20,14 +20,10 @@
         frameworks.
       </div>
       {#each projectNames as name}
-        <button
-          type="button"
+        <a
           class="uppercase p-2 mb-1 bg-gray-200"
-          on:click={() => {
-            activeProjectName = name;
-          }}
-          class:font-bold={name === activeProjectName}>{name}</button
-        >
+          href={`/${name}`}
+          class:font-bold={name === activeProjectName}>{name}</a>
       {/each}
     </section>
     <section class="h-full" slot="b">

@@ -32,7 +32,6 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 
 ## POC TODO
 
-- Toggle between examples in mini-docs
 - Handle nest file structure
 - If new rule example, write code to run test and show output, run build, then run lint
 
