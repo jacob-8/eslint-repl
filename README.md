@@ -35,9 +35,8 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 ## BASIC TODOS TO GET STARTED
 
 - Show linting errors
-- Save changes and run lint again
 - File tree
-- handle project switching w/o calling for ESLint install
+- Save changes and run lint again
 - Add AST explanation: https://www.mariokandut.com/how-to-write-custom-eslint-rule/
 
 ## FUTURE

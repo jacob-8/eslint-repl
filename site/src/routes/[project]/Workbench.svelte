@@ -1,11 +1,10 @@
 <script lang="ts">
   import SplitPane from "svelte-pieces/ui/SplitPane.svelte";
-  import { onMount } from "svelte";
   import Console from "./Console.svelte";
   import { convertToFileSystemTree } from "./convertToFileSystemTree";
   import CodeMirror from "$lib/editor/CodeMirror.svelte";
   import { runLint } from "$lib/commands";
-  import { mountProject, shellProcess, write } from "$lib/webcontainer";
+  import { mountProject, shellProcess, waitForProjectReady, write } from "$lib/webcontainer";
   import type { NeoCodemirrorOptions } from "@neocodemirror/svelte";
 
   export let files: Record<string, string>;
@@ -19,17 +18,8 @@
 
   $: mountProject(tree);
 
-  async function waitForShell() {
-    console.log("checking for shell");
-
-    if (!$shellProcess) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      return waitForShell();
-    }
-  }
-
   const lint: NeoCodemirrorOptions["lint"] = async () => {
-    await waitForShell();
+    await waitForProjectReady();
     const results = await runLint(editingFilename);
     console.log({ results });
     return [

@@ -4,7 +4,7 @@ import { type Writable, get, writable } from 'svelte/store'
 import { installDependencies, startShell, stubRules } from './commands'
 
 let webcontainer: WebContainer
-export const shellProcess: Writable<WebContainerProcess> = writable(null)
+export const shellProcess: Writable<WebContainerProcess | null> = writable(null)
 const projectReady = writable(false)
 
 export async function getWebContainer() {
@@ -38,11 +38,21 @@ export async function mountProject(tree: FileSystemTree) {
   if (tree['package.json'].file.contents.includes('"stub":'))
     await stubRules()
 
-  projectReady.set(true)
-
   const hasShell = get(shellProcess)
   if (!hasShell)
     shellProcess.set(await startShell())
+
+  projectReady.set(true)
+}
+
+export async function waitForProjectReady() {
+  console.log('checking if project ready')
+
+  const ready = get(projectReady)
+  if (!ready) {
+    await new Promise(resolve => setTimeout(resolve, 100))
+    return waitForProjectReady()
+  }
 }
 
 export async function write(path: string, content: string) {
