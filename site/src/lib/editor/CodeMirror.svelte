@@ -1,6 +1,7 @@
 <script lang="ts">
   // https://github.dev/PuruVJ/neocodemirror/blob/main/packages/svelte/src/index.ts
   import { codemirror, withCodemirrorInstance, type NeoCodemirrorOptions } from "@neocodemirror/svelte";
+	import { EditorView } from '@codemirror/view';
   import { js_snippets, svelte_snippets } from "./snippets";
 	import { createEventDispatcher } from 'svelte';
   import { mapOfExtensionToLanguage } from "./languages";
@@ -41,7 +42,7 @@
       from: 0,
       to: 10,
       severity: 'error',
-      // markClass: 'cm-lint-mark-error',
+      markClass: 'cm-lint-mark-error',
       source: 'ESLint',
       message: 'This is a diagnostic message',
       // actions: [{
@@ -54,7 +55,7 @@
   const dispatch = createEventDispatcher<{ change: { filename: string, content: string } }>();
 </script>
 
-<div
+<div class="h-full"
   use:codemirror={{
     value: content,
     documentId: filename,
@@ -67,11 +68,24 @@
       delay: 750, // default value
       // needsRefresh // can use when changes are made in other editor (eslint config or packages may have changed)
     },
-    extensions: [js_snippets, svelte_snippets],
+    extensions: [
+      js_snippets, 
+      svelte_snippets,
+      EditorView.lineWrapping,
+    ],
     instanceStore: cmInstance,
     // cursorPos: 0, will focus editor if set
   }}
-  on:codemirror:textChange={({ detail: updatedCode }) => {
+  on:codemirrsor:textChange={({ detail: updatedCode }) => {
     dispatch("change", { filename, content: updatedCode });
   }}
 />
+
+<style>
+  :global(.cm-editor) {
+    --at-apply: 'h-full !rounded-none';
+  }
+  :global(.cm-lint-mark-error) {
+    --at-apply: 'bg-red-600/25';
+  }
+</style>

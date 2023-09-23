@@ -29,5 +29,6 @@
     "jsonc",
     "yaml"
   ],
-  "eslint.experimental.useFlatConfig": true
+  "eslint.experimental.useFlatConfig": true,
+  "unocss.root": "site"
 }
