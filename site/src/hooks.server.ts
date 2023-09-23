@@ -5,9 +5,9 @@ export async function handle({ event, resolve }) {
   })
 
   // Add headers to allow cross-origin requests for webcontainer
-  response.headers.set('cross-origin-opener-policy', 'same-origin');
-  response.headers.set('cross-origin-embedder-policy', 'require-corp');
-  response.headers.set('cross-origin-resource-policy', 'cross-origin');
+  response.headers.set('cross-origin-opener-policy', 'same-origin')
+  response.headers.set('cross-origin-embedder-policy', 'require-corp')
+  response.headers.set('cross-origin-resource-policy', 'cross-origin')
 
   return response
 }

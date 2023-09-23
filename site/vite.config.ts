@@ -1,6 +1,7 @@
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
-import UnoCSS from '@unocss/svelte-scoped/vite';
+import { sveltekit } from '@sveltejs/kit/vite'
+import { defineConfig } from 'vite'
+import UnoCSS from '@unocss/svelte-scoped/vite'
+
 // import type { Plugin } from 'vite';
 
 export default defineConfig({
@@ -18,7 +19,7 @@ export default defineConfig({
       // 'Cross-Origin-Resource-Policy': 'cross-origin',
     },
   },
-});
+})
 
 // function crossOriginPreviewPlugin(): Plugin {
 //   return {

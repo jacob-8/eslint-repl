@@ -7,7 +7,7 @@ export default [
       foo: myRules,
     },
     rules: {
-      'foo/if-newline': 'error'
+      'foo/if-newline': 'error',
     },
   },
 ]

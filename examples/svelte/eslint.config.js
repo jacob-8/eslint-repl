@@ -15,10 +15,10 @@ export default [
       // },
     },
     rules: {
-      semi: ["error", "never"],
+      semi: ['error', 'never'],
       // https://sveltejs.github.io/eslint-plugin-svelte/rules/
       ...sveltePlugin.configs.base.overrides[0].rules,
       ...sveltePlugin.configs.recommended?.rules,
-    }
-  }
-];
+    },
+  },
+]
