@@ -9,6 +9,8 @@
 
   export let filename: string;
   export let content: string;
+  export let lint: NeoCodemirrorOptions['lint'] = undefined;
+
   $: lang = getLanguage(filename)
 
   function getLanguage(filename: string) {
@@ -36,22 +38,7 @@
         import("@codemirror/language-data"),
       ]).then(([{ markdown }, { languages }]) => markdown({ codeLanguages: languages })),
 	};
-
-  const lint: NeoCodemirrorOptions['lint'] = () => {
-    return [{
-      from: 0,
-      to: 10,
-      severity: 'error',
-      markClass: 'cm-lint-mark-error',
-      source: 'ESLint',
-      message: 'This is a diagnostic message',
-      // actions: [{
-      //   name: 'Fix',
-      //   apply: (view: EditorView, from: number, to: number) => void,
-      // }]
-    }]
-  };
-
+  
   const dispatch = createEventDispatcher<{ change: { filename: string, content: string } }>();
 </script>
 
@@ -76,7 +63,7 @@
     instanceStore: cmInstance,
     // cursorPos: 0, will focus editor if set
   }}
-  on:codemirrsor:textChange={({ detail: updatedCode }) => {
+  on:codemirror:textChange={({ detail: updatedCode }) => {
     dispatch("change", { filename, content: updatedCode });
   }}
 />

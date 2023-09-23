@@ -2,11 +2,19 @@ import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import 'xterm/css/xterm.css'
 
-export const terminal = new Terminal({
-  convertEol: true,
-  cursorBlink: true,
-  disableStdin: false,
-})
+let terminal: Terminal
+let fitAddon: FitAddon
 
-export const fitAddon = new FitAddon()
-terminal.loadAddon(fitAddon)
+export function getTerminal() {
+  if (terminal)
+    return { terminal, fitAddon }
+
+  terminal = new Terminal({
+    convertEol: true,
+    cursorBlink: true,
+    disableStdin: false,
+  })
+  fitAddon = new FitAddon()
+  terminal.loadAddon(fitAddon)
+  return { terminal, fitAddon }
+}

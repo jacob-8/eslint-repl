@@ -28,10 +28,7 @@
     <section class="h-full" slot="b">
       {#if browser}
         {#await import("./Workbench.svelte") then { default: Workbench }}
-          <!-- use key to easily reset on project change -->
-          {#key activeProjectName}
-            <Workbench files={projects[activeProjectName]} />
-          {/key}
+          <Workbench files={projects[activeProjectName]} />
         {/await}
       {/if}
     </section>

@@ -34,12 +34,13 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 
 ## BASIC TODOS TO GET STARTED
 
-- Use CodeMirror and build
-- Show linting errors in CodeMirror
+- Show linting errors
+- Save changes and run lint again
 - File tree
-- Save change
+- handle project switching w/o calling for ESLint install
 - Add AST explanation: https://www.mariokandut.com/how-to-write-custom-eslint-rule/
 
 ## FUTURE
 
-Feed examples via server.ts file, use HMR when editing
+- add antfu-config + Svelte issue example
+- feed examples via server.ts file, use HMR when editing
