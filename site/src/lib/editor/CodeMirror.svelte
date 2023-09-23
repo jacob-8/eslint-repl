@@ -22,7 +22,7 @@
   
   export function select(anchor: number, head: number = anchor) {
     // https://codemirror.net/examples/selection/
-    $cmInstance.view?.dispatch({selection: {anchor, head}})
+    $cmInstance.view?.dispatch({selection: {anchor, head}, userEvent: "select"})
   }
 
   const langMap: NeoCodemirrorOptions['langMap'] = {
@@ -74,5 +74,11 @@
   }
   :global(.cm-lint-mark-error) {
     --at-apply: 'bg-red-600/25';
+  }
+  :global(.cm-lint-mark-warning) {
+    --at-apply: 'bg-yellow-600/25';
+  }
+  :global(.cm-lint-mark-fixable) {
+    --at-apply: 'border-t-2 border-green-600';
   }
 </style>

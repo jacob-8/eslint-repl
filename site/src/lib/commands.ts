@@ -1,5 +1,5 @@
 import { getTerminal } from './terminal'
-import { getWebContainer, read } from './webcontainer'
+import { getWebContainer } from './webcontainer'
 
 export async function installDependencies() {
   const process = await spawnLoggingProcess('npm install')
@@ -7,21 +7,6 @@ export async function installDependencies() {
     throw new Error('npm install failed')
 
   return process
-}
-
-// const NO_LINT_ERRORS = 0
-// const LINT_ERRORS = 1
-const LINT_UNSUCCESFUL = 2
-
-export async function runLint(filename: string) {
-  const command = `npx eslint --format json-with-metadata --output-file ./lint-result.json ${filename}`
-  console.log(command)
-  const process = await spawnLoggingProcess(command)
-  if (await process.exit === LINT_UNSUCCESFUL)
-    throw new Error('lint failed')
-
-  const resultsString = await read('/lint-result.json')
-  return JSON.parse(resultsString)
 }
 
 export async function stubRules() {
@@ -58,7 +43,7 @@ export async function startShell() {
   return process
 }
 
-async function spawnLoggingProcess(command: string) {
+export async function spawnLoggingProcess(command: string) {
   const webcontainer = await getWebContainer()
   const { terminal } = getTerminal()
   const [main_command, ...args] = command.split(' ')

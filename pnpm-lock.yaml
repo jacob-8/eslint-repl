@@ -68,6 +68,9 @@ importers:
       '@codemirror/language-data':
         specifier: ^6.3.1
         version: 6.3.1(@codemirror/state@6.2.1)(@codemirror/view@6.20.1)(@lezer/common@1.1.0)
+      '@codemirror/lint':
+        specifier: ^6.4.2
+        version: 6.4.2
       '@codemirror/view':
         specifier: ^6.20.1
         version: 6.20.1
@@ -86,6 +89,9 @@ importers:
       '@sveltejs/kit':
         specifier: ^1.25.0
         version: 1.25.0(svelte@4.2.1)(vite@4.4.9)
+      '@types/eslint':
+        specifier: ^8.44.2
+        version: 8.44.2
       '@unocss/svelte-scoped':
         specifier: ^0.56.1
         version: 0.56.1
@@ -718,7 +724,7 @@ packages:
       ajv: 6.12.6
       debug: 4.3.4
       espree: 9.6.1
-      globals: 13.20.0
+      globals: 13.22.0
       ignore: 5.2.4
       import-fresh: 3.3.0
       js-yaml: 4.1.0
@@ -1114,6 +1120,13 @@ packages:
 
   /@types/cookie@0.5.2:
     resolution: {integrity: sha512-DBpRoJGKJZn7RY92dPrgoMew8xCWc2P71beqsjyhEI/Ds9mOyVmBwtekyfhpwFIVt1WrxTonFifiOZ62V8CnNA==}
+    dev: true
+
+  /@types/eslint@8.44.2:
+    resolution: {integrity: sha512-sdPRb9K6iL5XZOmBubg8yiFp5yS/JdUDQsq5e6h95km91MCYMuvp7mh1fjPEYUhvHepKpZOjnEaMBR4PxjWDzg==}
+    dependencies:
+      '@types/estree': 1.0.1
+      '@types/json-schema': 7.0.13
     dev: true
 
   /@types/estree@1.0.1:

@@ -3,9 +3,8 @@
   import Console from "./Console.svelte";
   import { convertToFileSystemTree } from "./convertToFileSystemTree";
   import CodeMirror from "$lib/editor/CodeMirror.svelte";
-  import { runLint } from "$lib/commands";
-  import { mountProject, shellProcess, waitForProjectReady, write } from "$lib/webcontainer";
-  import type { NeoCodemirrorOptions } from "@neocodemirror/svelte";
+  import { mountProject, shellProcess, write } from "$lib/webcontainer";
+  import { lint } from "$lib/lint";
 
   export let files: Record<string, string>;
 
@@ -17,26 +16,6 @@
     : "if-newline.ts";
 
   $: mountProject(tree);
-
-  const lint: NeoCodemirrorOptions["lint"] = async () => {
-    await waitForProjectReady();
-    const results = await runLint(editingFilename);
-    console.log({ results });
-    return [
-      {
-        from: 0,
-        to: 10,
-        severity: "error",
-        markClass: "cm-lint-mark-error",
-        source: "ESLint",
-        message: "This is a diagnostic message",
-        // actions: [{
-        //   name: 'Fix',
-        //   apply: (view: EditorView, from: number, to: number) => void,
-        // }]
-      },
-    ];
-  };
 </script>
 
 <SplitPane pos={30} min={0}>
@@ -67,7 +46,7 @@
             filename={editingFilename}
             content={tree.src.directory.rules.directory[editingFilename].file
               .contents}
-            {lint}
+            lint={lint(editingFilename)}
             on:change={async ({ detail: { filename, content } }) => {
               // console.log({ filename, content });
               await write("src/rules/if-newline.ts", content);
@@ -77,7 +56,7 @@
           <CodeMirror
             filename={editingFilename}
             content={tree[editingFilename].file.contents}
-            {lint}
+            lint={lint(editingFilename)}
             on:change={({ detail: { filename, content } }) => {
               // console.log({ filename, content });
             }}

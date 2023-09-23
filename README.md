@@ -34,12 +34,12 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 
 ## BASIC TODOS TO GET STARTED
 
-- Show linting errors
 - File tree
 - Save changes and run lint again
 - Add AST explanation: https://www.mariokandut.com/how-to-write-custom-eslint-rule/
 
 ## FUTURE
 
+- Create DOM element to improve linting errors w/ clickable URL
 - add antfu-config + Svelte issue example
 - feed examples via server.ts file, use HMR when editing

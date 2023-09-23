@@ -1,6 +1,6 @@
 <script>
   let a = 1;
-  let b
+  let b = 'hi'
 </script>
 
 Monaco for viewing linted code w/ warnings+errors (can split to a diff viewer if there are any auto-fix rules)
@@ -12,3 +12,5 @@ Monaco for viewing linted code w/ warnings+errors (can split to a diff viewer if
 {:else if b}
   <div>baz</div>
 {/if}
+
+<p>{@html b}</p>

@@ -3,7 +3,7 @@
   import { getTerminal } from "$lib/terminal";
   import type { WebContainerProcess } from "@webcontainer/api";
 
-  export let shellProcess: WebContainerProcess
+  export let shellProcess: WebContainerProcess | null
   let terminalEl: HTMLDivElement;
   let terminalWidth: number;
   let terminalHeight: number;
