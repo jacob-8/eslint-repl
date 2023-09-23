@@ -34,7 +34,7 @@ export const DEFAULT_MONACO_OPTIONS: editor.IStandaloneEditorConstructionOptions
 
 export const DEFAULT_MONACO_DIFF_OPTIONS: editor.IDiffEditorConstructionOptions = {
   ...BASE_OPTIONS,
-  // @ts-ignore
+  // @ts-expect-error not typed
   lineNumbers: false,
   readOnly: true,
   scrollbar: {
@@ -50,7 +50,7 @@ export const DEFAULT_MONACO_DIFF_OPTIONS: editor.IDiffEditorConstructionOptions 
 
 export const DEFAULT_MONACO_READ_ONLY_OPTIONS: editor.IStandaloneEditorConstructionOptions = {
   ...BASE_OPTIONS,
-  // @ts-ignore
+  // @ts-expect-error not typed
   lineNumbers: false,
   readOnly: true,
   scrollbar: {

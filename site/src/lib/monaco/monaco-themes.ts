@@ -52,7 +52,7 @@ export const vs_dark_plus2: import('monaco-editor').editor.IStandaloneThemeData 
     { token: 'variable.parameter', foreground: '9cdcfe' },
     { token: 'variable', foreground: '9cdcfe' },
     { token: 'variable.name', foreground: '9cdcfe' },
-    { token: 'meta.parameter.type.variable', foreground: '9cdcfe' }
+    { token: 'meta.parameter.type.variable', foreground: '9cdcfe' },
   ],
   colors: {
     'editor.background': '#1a1a1a',
@@ -148,7 +148,7 @@ export const vs_dark_plus: import('monaco-editor').editor.IStandaloneThemeData =
     { token: 'entity.name.label', foreground: 'C8C8C8' },
     { token: 'constant.language', foreground: '569CD6' },
     { token: 'entity.name.tag', foreground: '569CD6' },
-    { token: 'storage', foreground: '569cd6' }
+    { token: 'storage', foreground: '569cd6' },
   ],
-  colors: {}
+  colors: {},
 }
