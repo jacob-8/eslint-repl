@@ -43,18 +43,28 @@ export function convertLintResultsToDiagnostics({ metadata, results }: LintResul
       ? `${message} (<a href="${ruleDocsUrl}" target="_blank" style="text-decoration: underline;">${ruleId}</a>)`
       : `${message} (${ruleId})`
 
+    const actions: Diagnostic['actions'] = fix
+      ? [
+          {
+            name: 'Apply Fix',
+            apply(view) {
+              const [from, to] = fix.range
+              view.dispatch({
+                changes: [{ from: from - 1, to: to - 2, insert: fix.text }],
+              })
+              console.log({ from, to, text: fix.text })
+            },
+          },
+        ]
+      : []
+
     return {
       from: getPosFromLinesColumns({ line, column, source: (source as string) }),
       to: getPosFromLinesColumns({ line: endLine || line, column: endColumn || column, source: (source as string) }),
       severity: severity === 2 ? 'error' : 'warning',
       markClass,
       source: 'ESLint',
-      // actions: message.fix
-      //   ? [{
-      //       name: 'Fix',
-      //       apply: [...message.fix.range],
-      //     }]
-      //   : [],
+      actions,
       message, // not using but required by type
       renderMessage() {
         return renderNode(messageString)
