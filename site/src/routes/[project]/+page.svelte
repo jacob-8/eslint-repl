@@ -5,7 +5,6 @@
 
   export let data;
   $: projects = splitIntoProjects(data.projectsRaw);
-  $: projectNames = Object.keys(projects);
   $: activeProjectName = data.projectName;
 </script>
 
@@ -19,7 +18,7 @@
         build their own and share them. A fullstack REPL for ESLint across
         frameworks.
       </div>
-      {#each projectNames as name}
+      {#each Object.keys(projects) as name}
         <a
           class="uppercase p-2 mb-1 bg-gray-200"
           href={`/${name}`}
@@ -29,7 +28,7 @@
     <section class="h-full" slot="b">
       {#if browser}
         {#await import("./Workbench.svelte") then { default: Workbench }}
-          <!-- use key to reset and reload w/o having to manage things nicely yet -->
+          <!-- use key to easily reset on project change -->
           {#key activeProjectName}
             <Workbench files={projects[activeProjectName]} />
           {/key}

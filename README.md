@@ -1,5 +1,7 @@
 # ESLint Workbench
 
+[![code style](https://antfu.me/badge-code-style.svg)](https://github.com/antfu/eslint-config)
+
 Learn how to use ESLint, and even write a few rules of your own with live feedback and testing.
 
 ## CodeMirror
@@ -32,7 +34,12 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 
 ## BASIC TODOS TO GET STARTED
 
+- Use CodeMirror and build
+- Show linting errors in CodeMirror
 - File tree
 - Save change
-- Use CodeMirror to show linting errors
 - Add AST explanation: https://www.mariokandut.com/how-to-write-custom-eslint-rule/
+
+## FUTURE
+
+Feed examples via server.ts file, use HMR when editing

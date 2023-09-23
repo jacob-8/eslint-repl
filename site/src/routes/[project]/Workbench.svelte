@@ -4,7 +4,6 @@
   import { onMount } from "svelte";
   import Console from "./Console.svelte";
   import { terminal } from "$lib/terminal";
-  import MonacoEditor from "$lib/monaco/MonacoEditor.svelte";
   import { convertToFileSystemTree } from "./convertToFileSystemTree";
 
   export let files: Record<string, string>;
@@ -135,13 +134,13 @@
         <pre>{JSON.stringify(files, null, 2)}</pre>
       </section>
       <section class="h-full bg-black" slot="b">
-        <MonacoEditor
+        <!-- <MonacoEditor
           filename="eslint.config.js"
           content={tree["eslint.config.js"].file.contents}
           on:change={({ detail: { filename, content } }) => {
             console.log({ filename, content });
           }}
-        />
+        /> -->
       </section>
     </SplitPane>
   </section>
@@ -149,7 +148,7 @@
     <SplitPane type="vertical" pos={75} min={0}>
       <section class="h-full bg-black border-b border-gray-600" slot="a">
         {#if (editingFilename === "if-newline.ts")}
-          <MonacoEditor
+          <!-- <MonacoEditor
             filename={editingFilename}
             content={tree.src.directory.rules.directory[editingFilename].file
               .contents}
@@ -162,15 +161,15 @@
               );
               console.log({resultsString});
             }}
-          />
+          /> -->
         {:else}
-          <MonacoEditor
+          <!-- <MonacoEditor
             filename={editingFilename}
             content={tree[editingFilename].file.contents}
             on:change={({ detail: { filename, content } }) => {
               console.log({ filename, content });
             }}
-          />
+          /> -->
         {/if}
       </section>
       <section class="h-full" slot="b">
