@@ -36,10 +36,16 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 
 - File tree
 - Save changes and run lint again
+- improve lint speed with cli commands
+- log status to terminal instead of console
 - Add AST explanation: https://www.mariokandut.com/how-to-write-custom-eslint-rule/
+- Add fix result, [Merge View](https://codemirror.net/try/?example=Merge%20View)
+- terminal font
+- header
+- styles shopping
+- add antfu-config + Svelte issue example
 
 ## FUTURE
 
-- Create DOM element to improve linting errors w/ clickable URL
-- add antfu-config + Svelte issue example
+- Add fix action
 - feed examples via server.ts file, use HMR when editing

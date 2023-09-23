@@ -2,7 +2,7 @@ import type { Diagnostic } from '@codemirror/lint'
 import type { ESLint } from 'eslint'
 import type { NeoCodemirrorOptions } from '@neocodemirror/svelte'
 import { spawnLoggingProcess } from './commands'
-import { read, waitForProjectReady } from './webcontainer'
+import { checkProjectReady, read } from './webcontainer'
 import { getPosFromLinesColumns } from './getPosFromLinesColumns'
 
 interface LintResults { results: ESLint.LintResult[]; metadata: ESLint.LintResultData }
@@ -24,7 +24,7 @@ export async function runLint(filename: string): Promise<LintResults> {
 
 export function lint(filename: string): NeoCodemirrorOptions['lint'] {
   return async () => {
-    await waitForProjectReady()
+    await checkProjectReady()
     const results = await runLint(filename)
     console.log({ results })
     return convertLintResultsToDiagnostics(results)
@@ -39,6 +39,9 @@ export function convertLintResultsToDiagnostics({ metadata, results }: LintResul
       markClass += ' cm-lint-mark-fixable'
 
     const ruleDocsUrl = metadata.rulesMeta[ruleId!].docs?.url
+    const messageString = ruleDocsUrl
+      ? `${message} (<a href="${ruleDocsUrl}" target="_blank" style="text-decoration: underline;">${ruleId}</a>)`
+      : `${message} (${ruleId})`
 
     return {
       from: getPosFromLinesColumns({ line, column, source: (source as string) }),
@@ -46,13 +49,16 @@ export function convertLintResultsToDiagnostics({ metadata, results }: LintResul
       severity: severity === 2 ? 'error' : 'warning',
       markClass,
       source: 'ESLint',
-      message: `${message} (${ruleId}${ruleDocsUrl ? ` - ${ruleDocsUrl}` : ''})`,
       // actions: message.fix
       //   ? [{
       //       name: 'Fix',
       //       apply: [...message.fix.range],
       //     }]
       //   : [],
+      message, // not using but required by type
+      renderMessage() {
+        return renderNode(messageString)
+      },
     }
   })
 }
@@ -60,3 +66,9 @@ export function convertLintResultsToDiagnostics({ metadata, results }: LintResul
 // function apply() {
 //   ($cmInstance.view, 0, 0) => { }
 // }
+
+function renderNode(message: string): Element {
+  const div = document.createElement('div')
+  div.innerHTML = message
+  return div
+}

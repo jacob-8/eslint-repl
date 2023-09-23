@@ -45,13 +45,13 @@ export async function mountProject(tree: FileSystemTree) {
   projectReady.set(true)
 }
 
-export async function waitForProjectReady() {
+export async function checkProjectReady() {
   console.log('checking if project ready')
 
   const ready = get(projectReady)
   if (!ready) {
     await new Promise(resolve => setTimeout(resolve, 100))
-    return waitForProjectReady()
+    return checkProjectReady()
   }
 }
 
