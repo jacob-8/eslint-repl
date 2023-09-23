@@ -1,7 +1,7 @@
 {
   "name": "eslint-workbench",
-  "version": "0.0.1",
   "type": "module",
+  "version": "0.0.1",
   "scripts": {
     "dev": "pnpm --filter=site dev",
     "build": "pnpm --filter=site build",
@@ -12,14 +12,22 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "6.0.0-alpha.138",
-    "@typescript-eslint/parser": "6.0.0-alpha.144",
-    "@vitest/ui": "^0.34.4",
-    "eslint": "^8.41.0",
-    "eslint-define-config": "^1.20.0",
-    "eslint-plugin-svelte": "^2.29.0",
-    "globals": "^13.20.0",
+    "@antfu/eslint-config": "1.0.0-beta.3",
+    "@typescript-eslint/eslint-plugin": "6.7.2",
+    "@typescript-eslint/parser": "6.7.2",
+    "@vitest/ui": "^0.34.5",
+    "eslint": "^8.50.0",
+    "eslint-define-config": "^1.23.0",
+    "eslint-plugin-svelte": "^2.33.2",
+    "lint-staged": "^14.0.1",
+    "simple-git-hooks": "^2.9.0",
     "typescript": "~5.2.2",
-    "vitest": "^0.34.4"
+    "vitest": "^0.34.5"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   }
 }
