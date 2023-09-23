@@ -12,6 +12,18 @@
     "test": "vitest"
   },
   "devDependencies": {
+    "@codemirror/autocomplete": "^6.9.1",
+    "@codemirror/lang-css": "^6.2.1",
+    "@codemirror/lang-html": "^6.4.6",
+    "@codemirror/lang-javascript": "^6.2.1",
+    "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/lang-markdown": "^6.2.1",
+    "@codemirror/language": "^6.9.1",
+    "@codemirror/language-data": "^6.3.1",
+    "@codemirror/view": "^6.20.1",
+    "@lezer/highlight": "^1.1.6",
+    "@neocodemirror/svelte": "^0.0.17",
+    "@replit/codemirror-lang-svelte": "^6.0.0",
     "@sveltejs/adapter-auto": "^2.1.0",
     "@sveltejs/kit": "^1.25.0",
     "@unocss/svelte-scoped": "^0.56.1",
