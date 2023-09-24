@@ -8,7 +8,7 @@
   $: activeProjectName = data.projectName;
 </script>
 
-<div class="h-100vh">
+<div class="h-100vh" style="--scrollbar-border-color: #1e1e1e;">
   <SplitPane pos={28} min={0}>
     <section class="h-full border-r flex flex-col" slot="a">
       <div class="p-3">
@@ -28,7 +28,7 @@
     <section class="h-full" slot="b">
       {#if browser}
         {#await import("./Workbench.svelte") then { default: Workbench }}
-          <Workbench files={projects[activeProjectName]} />
+          <Workbench projectFiles={projects[activeProjectName]} />
         {/await}
       {/if}
     </section>

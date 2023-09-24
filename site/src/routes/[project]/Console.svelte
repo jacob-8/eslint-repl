@@ -26,6 +26,7 @@
 
 <div
   class="w-full h-full overflow-hidden"
+  style="--scrollbar-border-color: black;"
   bind:clientWidth={terminalWidth}
   bind:clientHeight={terminalHeight}
   bind:this={terminalEl}

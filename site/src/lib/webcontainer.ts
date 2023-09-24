@@ -30,9 +30,9 @@ async function clearFileSystem() {
     await vm.fs.rm(`./${file}`, { recursive: true })
 }
 
-export async function mountProject(tree: FileSystemTree) {
+export async function initProjectInWebContainer(tree: FileSystemTree) {
   projectReady.set(false)
-  console.log('mounting project')
+  console.log('initing project')
   await mount(tree)
   await installDependencies()
   if (tree['package.json'].file.contents.includes('"stub":'))

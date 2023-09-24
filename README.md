@@ -34,18 +34,23 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 
 ## BASIC TODOS TO GET STARTED
 
-- File tree
-- Save changes and run lint again
+- Parse project, choose linting and config selected files, pass to tree and highlight, pass to editors
+- File tree emits selected file and passes to editors
+- Editors save changes to file system, update tree and run lint again
 - improve lint speed with cli commands
-- log status to terminal instead of console
-- Add AST explanation: https://www.mariokandut.com/how-to-write-custom-eslint-rule/
 - Add fix result, [Merge View](https://codemirror.net/try/?example=Merge%20View)
-- terminal font
-- header
-- styles shopping
-- add antfu-config + Svelte issue example
+- log status to terminal instead of console
+- add GitHub link
+- add antfu-config + Svelte issue example and share
 
 ## FUTURE
 
+- sharing URL
+- terminal font
+- header
+- styles shopping
+- add basic tutorial
+- Add AST explanation: https://www.mariokandut.com/how-to-write-custom-eslint-rule/
+- resize remembering of panels + hotkeys
 - Inspect fix action positioning on other lines
 - feed examples via server.ts file, use HMR when editing
