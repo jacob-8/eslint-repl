@@ -34,12 +34,11 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 
 ## BASIC TODOS TO GET STARTED
 
-- Parse project, choose linting and config selected files, pass to tree and highlight, pass to editors
+- Parse project and example-meta, choose linting and config selected files, pass to tree and highlight, pass to editors
 - File tree emits selected file and passes to editors
 - Editors save changes to file system, update tree and run lint again
 - improve lint speed with cli commands
 - Add fix result, [Merge View](https://codemirror.net/try/?example=Merge%20View)
-- log status to terminal instead of console
 - add GitHub link
 - add antfu-config + Svelte issue example and share
 

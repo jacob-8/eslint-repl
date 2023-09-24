@@ -5,25 +5,31 @@ import { installDependencies, startShell, stubRules } from './commands'
 
 let webcontainer: WebContainer
 export const shellProcess: Writable<WebContainerProcess | null> = writable(null)
-const projectReady = writable(false)
+type ProjectStatus = null | 'booting' | 'mounting' | 'installing' | 'stubbing' | 'starting-shell' | 'ready' | 'error'
+export const projectStatus = writable<ProjectStatus>(null)
 
 export async function getWebContainer() {
   if (webcontainer)
     return webcontainer
-  console.info('booting webcontainer')
+  projectStatus.set('booting')
   webcontainer = await WebContainer.boot()
   return webcontainer
 }
 
 export async function mount(tree: FileSystemTree) {
   const vm = await getWebContainer()
-  console.log('mounting files')
   await clearFileSystem()
+  projectStatus.set('mounting')
   await vm.mount(tree)
 }
 
 async function clearFileSystem() {
-  console.log('clearing filesystem')
+  const afterInitialBoot = get(projectStatus) === 'booting'
+  if (afterInitialBoot)
+    return
+
+  // eslint-disable-next-line no-console
+  console.log('clearing file system')
   const vm = await getWebContainer()
   const main_dir = await vm.fs.readdir('./')
   for (const file of main_dir)
@@ -31,24 +37,26 @@ async function clearFileSystem() {
 }
 
 export async function initProjectInWebContainer(tree: FileSystemTree) {
-  projectReady.set(false)
-  console.log('initing project')
   await mount(tree)
   await installDependencies()
-  if (tree['package.json'].file.contents.includes('"stub":'))
-    await stubRules()
+  if ('file' in tree['package.json']) {
+    const packageJsonContents = tree['package.json'].file.contents as string
+    if (packageJsonContents.includes('"stub":'))
+      await stubRules()
+  }
 
   const hasShell = get(shellProcess)
   if (!hasShell)
     shellProcess.set(await startShell())
 
-  projectReady.set(true)
+  projectStatus.set('ready')
 }
 
 export async function checkProjectReady() {
+  // eslint-disable-next-line no-console
   console.log('checking if project ready')
 
-  const ready = get(projectReady)
+  const ready = get(projectStatus) === 'ready'
   if (!ready) {
     await new Promise(resolve => setTimeout(resolve, 100))
     return checkProjectReady()

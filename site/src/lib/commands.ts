@@ -1,7 +1,9 @@
 import { getTerminal } from './terminal'
-import { getWebContainer } from './webcontainer'
+import { getWebContainer, projectStatus } from './webcontainer'
 
 export async function installDependencies() {
+  projectStatus.set('installing')
+
   const process = await spawnLoggingProcess('npm install')
   if (await process.exit !== 0)
     throw new Error('npm install failed')
@@ -10,7 +12,8 @@ export async function installDependencies() {
 }
 
 export async function stubRules() {
-  console.log('stubbing rules')
+  projectStatus.set('stubbing')
+
   const process = await spawnLoggingProcess('npm run stub')
   if (await process.exit !== 0)
     throw new Error('stub failed')
@@ -19,6 +22,8 @@ export async function stubRules() {
 }
 
 export async function startShell() {
+  projectStatus.set('starting-shell')
+
   const webcontainer = await getWebContainer()
   const { terminal } = getTerminal()
   const process = await webcontainer.spawn('jsh', {
