@@ -33,7 +33,8 @@ export function lint(filename: string): NeoCodemirrorOptions['lint'] {
 
 export function convertLintResultsToDiagnostics({ metadata, results }: LintResults): Diagnostic[] {
   const [{ messages, source }] = results
-  return messages.map(({ severity, line, column, endLine, endColumn, message, ruleId, fix }) => {
+  const actualMessages = messages.filter(({ ruleId }) => ruleId)
+  return actualMessages.map(({ severity, line, column, endLine, endColumn, message, ruleId, fix }) => {
     let markClass = severity === 2 ? 'cm-lint-mark-error' : 'cm-lint-mark-warning'
     if (fix)
       markClass += ' cm-lint-mark-fixable'
@@ -50,7 +51,7 @@ export function convertLintResultsToDiagnostics({ metadata, results }: LintResul
             apply(view) {
               const [from, to] = fix.range
               view.dispatch({
-                changes: [{ from: from - 1, to: to - 2, insert: fix.text }],
+                changes: [{ from: from - 1, to: to - 1, insert: fix.text }], // TODO: maybe needs one less per line?
               })
               console.log({ from, to, text: fix.text })
             },

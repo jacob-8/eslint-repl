@@ -6,6 +6,20 @@
   export let data;
   $: projects = splitIntoProjects(data.projectsRaw);
   $: activeProjectName = data.projectName;
+  let lintFocus: string
+  let configFocus = 'eslint.config.js'
+
+  $: if (browser && data.projectsMeta) loadMeta()
+  async function loadMeta() {
+    const metaPromise = data.projectsMeta[`../../../../examples/${activeProjectName}/example-meta.ts`]
+    if (metaPromise) {
+      const { meta } = await metaPromise()
+      lintFocus = meta.lintFocus
+      if (meta.configFocus) {
+        configFocus = meta.configFocus
+      }
+    }
+  }
 </script>
 
 <div class="h-100vh" style="--scrollbar-border-color: #1e1e1e;">
@@ -26,9 +40,9 @@
       {/each}
     </section>
     <section class="h-full" slot="b">
-      {#if browser}
+      {#if lintFocus}
         {#await import("./Workbench.svelte") then { default: Workbench }}
-          <Workbench projectFiles={projects[activeProjectName]} />
+          <Workbench projectFiles={projects[activeProjectName]} {lintFocus} {configFocus} />
         {/await}
       {/if}
     </section>

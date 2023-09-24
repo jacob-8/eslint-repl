@@ -41,6 +41,6 @@
 
 <style>
   span {
-    vertical-align: -2px;
+    vertical-align: -3px;
   }
 </style>

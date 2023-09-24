@@ -1,10 +1,12 @@
 <script lang="ts">
   import FileIcons from "./FileIcons.svelte";
 
-  export let name = "";
+  export let path = "";
   export let isDirectory = false;
   export let expanded = false;
   export let isSelected = false;
+
+  $: name = path.split("/").pop() || "";
 </script>
 
 <button
@@ -14,14 +16,14 @@
   style="white-space: nowrap;"
   on:click
   on:dblclick={() => {
-    // if (can_remove) rename();
+    // alert('rename not implemented yet')
   }}
 >
   {#if isDirectory}
     {#if expanded}
-      <span class="i-material-symbols-folder-open align--2px" />
+      <span class="i-material-symbols-folder-open align--3px" />
     {:else}
-      <span class="i-material-symbols-folder align--2px" />
+      <span class="i-material-symbols-folder align--3px" />
     {/if}
   {:else}
     <FileIcons basename={name} />

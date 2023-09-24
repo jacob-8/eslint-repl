@@ -8,6 +8,8 @@ export const variants: Variants<Component> = [
     description: 'Describe this variant',
     props: {
       tree: basic,
+      configFocus: 'build.config.ts',
+      lintFocus: 'README.md',
     },
   },
 ]
