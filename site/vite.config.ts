@@ -1,26 +1,33 @@
 import { sveltekit } from '@sveltejs/kit/vite'
 import { defineConfig } from 'vite'
 import UnoCSS from '@unocss/svelte-scoped/vite'
-
-// import type { Plugin } from 'vite';
+import { kitbook } from 'kitbook/plugins/vite'
 
 export default defineConfig({
   plugins: [
     UnoCSS({
       injectReset: '@unocss/reset/tailwind.css',
     }),
-    // crossOriginPreviewPlugin(),
+    kitbook({
+      title: 'ESLint Workbench',
+      description: 'Develop and test ESLint rules in the browser',
+      viewports: [
+        { width: 320, height: 640 },
+      ],
+      expandTree: true,
+    }),
     sveltekit(),
   ],
-  server: {
-    headers: {
-      // 'Cross-Origin-Embedder-Policy': 'require-corp',
-      // 'Cross-Origin-Opener-Policy': 'same-origin',
-      // 'Cross-Origin-Resource-Policy': 'cross-origin',
-    },
-  },
+  // server: {
+  // headers: {
+  // 'Cross-Origin-Embedder-Policy': 'require-corp',
+  // 'Cross-Origin-Opener-Policy': 'same-origin',
+  // 'Cross-Origin-Resource-Policy': 'cross-origin',
+  // },
+  // },
 })
 
+// import type { Plugin } from 'vite';
 // function crossOriginPreviewPlugin(): Plugin {
 //   return {
 //     name: 'cross-origin-isolation-for-preview',

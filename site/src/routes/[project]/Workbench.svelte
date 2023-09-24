@@ -5,6 +5,7 @@
   import CodeMirror from "$lib/editor/CodeMirror.svelte";
   import { mountProject, shellProcess, write } from "$lib/webcontainer";
   import { lint } from "$lib/lint";
+  import './scrollbar.css'
 
   export let files: Record<string, string>;
 

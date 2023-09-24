@@ -47,5 +47,5 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 
 ## FUTURE
 
-- Add fix action
+- Inspect fix action positioning on other lines
 - feed examples via server.ts file, use HMR when editing
