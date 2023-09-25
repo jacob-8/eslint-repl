@@ -7,6 +7,11 @@ const { FlatESLint } = pkg
   ; (async function main() {
   const [filePath] = process.argv.slice(2)
 
+  /** @type {import('eslint/lib/eslint/flat-eslint').FlatESLintOptions} */
+  // const options = {
+  // fix: true,
+  // }
+
   /** @type {import('eslint/lib/eslint/flat-eslint').FlatESLint} */
   const eslint = new FlatESLint()
   const config = await eslint.calculateConfigForFile(filePath)
@@ -18,15 +23,17 @@ const { FlatESLint } = pkg
     throw new Error('No rules found')
 
   const ruleIds = Object.keys(config.rules)
-  const rulesMeta = eslint.getRulesMetaForResults(
-    ruleIds.map((ruleId) => {
-      return {
-        messages: [{ ruleId }],
-        filePath: '<text>',
-        suppressedMessages: [],
-      }
-    }),
-  )
+
+  /** @type {import('eslint/lib/shared/types').LintResult[]} */
+  const results = ruleIds.map((ruleId) => {
+    return {
+      messages: [{ ruleId }],
+      filePath,
+      suppressedMessages: [],
+    }
+  })
+
+  const rulesMeta = eslint.getRulesMetaForResults(results)
 
   console.log(JSON.stringify(rulesMeta))
 })().catch((error) => {

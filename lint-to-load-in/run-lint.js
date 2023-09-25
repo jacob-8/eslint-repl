@@ -6,8 +6,13 @@ const { FlatESLint } = pkg
 ;(async function main() {
   const [filePath, codeToLint] = process.argv.slice(2)
 
+  /** @type {import('eslint/lib/eslint/flat-eslint').FlatESLintOptions} */
+  const options = {
+    // fix: true,
+  }
+
   /** @type {import('eslint/lib/eslint/flat-eslint').FlatESLint} */
-  const eslint = new FlatESLint()
+  const eslint = new FlatESLint(options)
 
   const results = await eslint.lintText(codeToLint, { filePath })
   const rulesMeta = eslint.getRulesMetaForResults(results)

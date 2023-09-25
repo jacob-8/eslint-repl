@@ -3,19 +3,16 @@ import type { ESLint, Rule } from 'eslint'
 import type { NeoCodemirrorOptions } from '@neocodemirror/svelte'
 import { checkProjectReady, getWebContainer } from './webcontainer'
 import { getPosFromLinesColumns } from './getPosFromLinesColumns'
+import { currentLintResults } from './stores/lint-results'
 
-interface LintResults {
+export interface LintResults {
   results: ESLint.LintResult[]
   rulesMeta: RulesMeta
 }
 
-interface RulesMeta {
+export interface RulesMeta {
   [ruleId: string]: Rule.RuleMetaData
 }
-
-// const NO_LINT_ERRORS = 0
-// const LINT_ERRORS = 1
-const LINT_UNSUCCESFUL = 2
 
 // `npx eslint --format json-with-metadata --output-file ./lint-result.json ${filename}`
 // `echo "export const hello = 'world';" | npx eslint --format json-with-metadata --stdin --stdin-filename index.js`
@@ -38,10 +35,10 @@ export async function runLint(filename: string, content: string): Promise<LintRe
     }),
   )
 
-  if (await process.exit === LINT_UNSUCCESFUL)
-    throw new Error('lint failed')
+  if (await process.exit === 1)
+    throw new Error(`lint failed: ${resultsString}`)
+
   console.timeEnd('linting')
-  // console.log({ filename, resultsString })
   return JSON.parse(resultsString) as LintResults
 }
 
@@ -49,14 +46,16 @@ export function lint(filename: string, content: string): NeoCodemirrorOptions['l
   return async () => {
     await checkProjectReady()
     const lintResults = await runLint(filename, content)
+    currentLintResults.set(lintResults)
     // eslint-disable-next-line no-console
     console.log({ lintResults })
-    return convertLintResultsToDiagnostics(lintResults)
+    return convertLintResultsToDiagnostics(lintResults, content)
   }
 };
 
-export function convertLintResultsToDiagnostics({ rulesMeta, results }: LintResults): Diagnostic[] {
-  const [{ messages, source }] = results
+export function convertLintResultsToDiagnostics({ rulesMeta, results }: LintResults, source: string): Diagnostic[] {
+  const [{ messages, output }] = results
+  // console.log({ fixed: output })
   const actualMessages = messages.filter(({ ruleId }) => ruleId)
   return actualMessages.map(({ severity, line, column, endLine, endColumn, message, ruleId, fix }) => {
     let markClass = severity === 2 ? 'cm-lint-mark-error' : 'cm-lint-mark-warning'
@@ -112,19 +111,19 @@ export async function getLintConfig(filename: string): Promise<RulesMeta> {
   await checkProjectReady()
   console.log(`getting rules for: ${filename}`)
   console.time('rule-getting')
-  let resultsString = ''
+  let rulesForFileString = ''
   const webcontainer = await getWebContainer()
   const process = await webcontainer.spawn('node', ['get-config.js', filename])
   process.output.pipeTo(
     new WritableStream({
       write(data) {
-        resultsString += data
+        rulesForFileString += data
       },
     }),
   )
 
   if (await process.exit === 1)
-    throw new Error(`rule-getting failed: ${resultsString}`)
+    throw new Error(`rule-getting failed: ${rulesForFileString}`)
   console.timeEnd('rule-getting')
-  return JSON.parse(resultsString) as RulesMeta
+  return JSON.parse(rulesForFileString) as RulesMeta
 }

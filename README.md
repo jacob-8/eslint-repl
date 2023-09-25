@@ -34,14 +34,14 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 
 ## BASIC TODOS TO GET STARTED
 
-- Add fix result, [Merge View](https://codemirror.net/try/?example=Merge%20View)
-- add GitHub link
-- add antfu-config + Svelte issue example and share
+- sharing URL (includes focused files)
+- basic explanation text
+- add my antfu-config + Svelte issue and share
 
 ## FUTURE
 
-- sharing URL
-  - choose linting and config selected files automatically if not set
+- Add fix result, [Merge View](https://codemirror.net/try/?example=Merge%20View)
+- ESLint Workbench or ESLint REPL?
 - terminal font
 - header
 - styles shopping

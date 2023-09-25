@@ -38,6 +38,12 @@
           href={`/${name}`}
           class:font-bold={name === activeProjectName}>{name}</a>
       {/each}
+
+      <div>
+        <a href="https://github.com/jacob-8/eslint-workbench" target="_blank" class="p-3 hover:bg-gray-100 rounded block">
+          <span class="i-mdi-github text-lg text-gray-800 align--3px" /> View Repo
+        </a>
+      </div>
     </section>
     <section class="h-full" slot="b">
       {#if lintFocus}

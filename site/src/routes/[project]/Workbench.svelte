@@ -1,4 +1,5 @@
 <script lang="ts">
+  import CurrentRules from "./CurrentRules.svelte";
   import SplitPane from "svelte-pieces/ui/SplitPane.svelte";
   import Console from "./Console.svelte";
   import { convertToFileSystemTree } from "$lib/filetree/convertToFileSystemTree";
@@ -10,9 +11,11 @@
     shellProcess,
     write,
   } from "$lib/webcontainer";
-  import { getLintConfig, lint } from "$lib/lint";
+  import { getLintConfig, lint, type RulesMeta } from "$lib/lint";
   import Explorer from "$lib/filetree/Explorer.svelte";
   import { writable } from "svelte/store";
+  import { currentViolationRuleIds } from "$lib/stores/lint-results";
+  import Tabs from "$lib/Tabs.svelte";
 
   export let projectFiles: Record<string, string>;
   export let configFocus: string;
@@ -26,13 +29,17 @@
     initProjectInWebContainer(tree);
   }
 
-  $: if (lintFocus) getLintRules();
+  let rulesMeta: RulesMeta = {};
+  $: if (lintFocus) {
+    rulesMeta = {};
+    getLintRules();
+  }
   async function getLintRules() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await checkProjectReady();
-      const lintConfig = await getLintConfig(lintFocus);
-      console.log({ lintFocus, lintConfig });
+      rulesMeta = await getLintConfig(lintFocus);
+      console.log({ lintFocus, rulesMetaLintFocus: rulesMeta });
     } catch (err) {
       console.log(err);
     }
@@ -65,7 +72,7 @@
     </SplitPane>
   </section>
   <section class="h-full" slot="b">
-    <SplitPane type="vertical" pos={75} min={0}>
+    <SplitPane type="vertical" pos={70} min={0}>
       <section class="h-full bg-black border-b border-truegray-700" slot="a">
         <CodeMirror
           filename={lintFocus}
@@ -80,15 +87,25 @@
           }}
         />
       </section>
-      <section class="h-full relative" slot="b">
-        <Console shellProcess={$shellProcess} />
-        {#if $projectStatus !== "ready"}
-          <div
-            class="absolute z-1 right-0 top-0 font-semibold text-white bg-black p-2"
-          >
-            Status: {$projectStatus}
-          </div>
-        {/if}
+      <section class="h-full bg-black text-gray-200 flex flex-col" slot="b">
+        <Tabs>
+          <svelte:fragment slot="first">
+            {#if $projectStatus !== "ready"}
+              <div class="font-semibold p-2">
+                Status: {$projectStatus}
+              </div>
+            {:else}
+              <CurrentRules
+                filename={lintFocus}
+                {rulesMeta}
+                currentViolationRuleIds={$currentViolationRuleIds}
+              />
+            {/if}
+          </svelte:fragment>
+          <svelte:fragment slot="second">
+            <Console shellProcess={$shellProcess} />
+          </svelte:fragment>
+        </Tabs>
       </section>
     </SplitPane>
   </section>

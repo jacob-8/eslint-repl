@@ -9,7 +9,7 @@ export default defineConfig({
       injectReset: '@unocss/reset/tailwind.css',
     }),
     kitbook({
-      title: 'ESLint Workbench',
+      title: 'ESLint Workbench Kitbook',
       description: 'Develop and test ESLint rules in the browser',
       viewports: [
         { width: 320, height: 640 },
