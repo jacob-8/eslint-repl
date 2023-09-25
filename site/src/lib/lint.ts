@@ -1,37 +1,61 @@
 import type { Diagnostic } from '@codemirror/lint'
-import type { ESLint } from 'eslint'
+import type { ESLint, Rule } from 'eslint'
 import type { NeoCodemirrorOptions } from '@neocodemirror/svelte'
-import { spawnLoggingProcess } from './commands'
-import { checkProjectReady, read } from './webcontainer'
+import { checkProjectReady, getWebContainer } from './webcontainer'
 import { getPosFromLinesColumns } from './getPosFromLinesColumns'
 
-interface LintResults { results: ESLint.LintResult[]; metadata: ESLint.LintResultData }
+interface LintResults {
+  results: ESLint.LintResult[]
+  rulesMeta: RulesMeta
+}
+
+interface RulesMeta {
+  [ruleId: string]: Rule.RuleMetaData
+}
 
 // const NO_LINT_ERRORS = 0
 // const LINT_ERRORS = 1
 const LINT_UNSUCCESFUL = 2
 
-export async function runLint(filename: string): Promise<LintResults> {
-  const command = `npx eslint --format json-with-metadata --output-file ./lint-result.json ${filename}`
-  console.log(command)
-  const process = await spawnLoggingProcess(command)
+// `npx eslint --format json-with-metadata --output-file ./lint-result.json ${filename}`
+// `echo "export const hello = 'world';" | npx eslint --format json-with-metadata --stdin --stdin-filename index.js`
+// `echo "${escapedContent}" | npx eslint --format json-with-metadata --stdin --stdin-filename ${filename}`
+// use --fix-dry-run to get the fix info
+// const process = await webcontainer.spawn('echo', [`"${escapedContent}"`, '|', 'npx', 'eslint', '--format', 'json-with-metadata', '--stdin', '--stdin-filename', filename])
+// const process = await webcontainer.spawn('npx', ['eslint', '--format', 'json-with-metadata', filename])
+
+export async function runLint(filename: string, content: string): Promise<LintResults> {
+  console.log(`linting ${filename}`)
+  console.time('linting')
+  let resultsString = ''
+  const webcontainer = await getWebContainer()
+  const process = await webcontainer.spawn('node', ['run-lint.js', filename, content])
+  process.output.pipeTo(
+    new WritableStream({
+      write(data) {
+        resultsString += data
+      },
+    }),
+  )
+
   if (await process.exit === LINT_UNSUCCESFUL)
     throw new Error('lint failed')
-
-  const resultsString = await read('/lint-result.json')
+  console.timeEnd('linting')
+  // console.log({ filename, resultsString })
   return JSON.parse(resultsString) as LintResults
 }
 
-export function lint(filename: string): NeoCodemirrorOptions['lint'] {
+export function lint(filename: string, content: string): NeoCodemirrorOptions['lint'] {
   return async () => {
     await checkProjectReady()
-    const results = await runLint(filename)
-    console.log({ results })
-    return convertLintResultsToDiagnostics(results)
+    const lintResults = await runLint(filename, content)
+    // eslint-disable-next-line no-console
+    console.log({ lintResults })
+    return convertLintResultsToDiagnostics(lintResults)
   }
 };
 
-export function convertLintResultsToDiagnostics({ metadata, results }: LintResults): Diagnostic[] {
+export function convertLintResultsToDiagnostics({ rulesMeta, results }: LintResults): Diagnostic[] {
   const [{ messages, source }] = results
   const actualMessages = messages.filter(({ ruleId }) => ruleId)
   return actualMessages.map(({ severity, line, column, endLine, endColumn, message, ruleId, fix }) => {
@@ -39,7 +63,7 @@ export function convertLintResultsToDiagnostics({ metadata, results }: LintResul
     if (fix)
       markClass += ' cm-lint-mark-fixable'
 
-    const ruleDocsUrl = metadata.rulesMeta[ruleId!].docs?.url
+    const ruleDocsUrl = rulesMeta[ruleId!].docs?.url
     const messageString = ruleDocsUrl
       ? `${message} (<a href="${ruleDocsUrl}" target="_blank" style="text-decoration: underline;">${ruleId}</a>)`
       : `${message} (${ruleId})`
@@ -82,4 +106,25 @@ function renderNode(message: string): Element {
   const div = document.createElement('div')
   div.innerHTML = message
   return div
+}
+
+export async function getLintConfig(filename: string): Promise<RulesMeta> {
+  await checkProjectReady()
+  console.log(`getting rules for: ${filename}`)
+  console.time('rule-getting')
+  let resultsString = ''
+  const webcontainer = await getWebContainer()
+  const process = await webcontainer.spawn('node', ['get-config.js', filename])
+  process.output.pipeTo(
+    new WritableStream({
+      write(data) {
+        resultsString += data
+      },
+    }),
+  )
+
+  if (await process.exit === 1)
+    throw new Error(`rule-getting failed: ${resultsString}`)
+  console.timeEnd('rule-getting')
+  return JSON.parse(resultsString) as RulesMeta
 }

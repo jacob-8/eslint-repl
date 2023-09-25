@@ -53,14 +53,16 @@
     {/each}
     {#each Object.entries(tree) as [name, node]}
       {#if "file" in node}
-        <li>
-          <File
-            path="{pathWithSlash}{name}"
-            depth={depth + 1}
-            bind:lintFocus
-            bind:configFocus
-          />
-        </li>
+        {#if !["get-config.js", "run-lint.js"].includes(name)}
+          <li>
+            <File
+              path="{pathWithSlash}{name}"
+              depth={depth + 1}
+              bind:lintFocus
+              bind:configFocus
+            />
+          </li>
+        {/if}
       {/if}
     {/each}
   </ul>

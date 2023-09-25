@@ -4,7 +4,7 @@
   import { splitIntoProjects } from "./splitIntoProjects";
 
   export let data;
-  $: projects = splitIntoProjects(data.projectsRaw);
+  $: projects = splitIntoProjects(data.projectsRaw, data.lintModulesRaw);
   $: activeProjectName = data.projectName;
   let lintFocus: string
   let configFocus = 'eslint.config.js'

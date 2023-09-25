@@ -54,13 +54,14 @@ export async function initProjectInWebContainer(tree: FileSystemTree) {
 
 export async function checkProjectReady() {
   // eslint-disable-next-line no-console
-  console.log('checking if project ready')
+  console.log('linter checking if project ready')
 
-  const ready = get(projectStatus) === 'ready'
-  if (!ready) {
-    await new Promise(resolve => setTimeout(resolve, 100))
-    return checkProjectReady()
-  }
+  const status = get(projectStatus)
+  if (status === 'ready' || status === 'starting-shell')
+    return
+
+  await new Promise(resolve => setTimeout(resolve, 100))
+  return checkProjectReady()
 }
 
 export async function write(path: string, content: string) {

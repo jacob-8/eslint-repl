@@ -1,0 +1,41 @@
+/* eslint-disable no-console */
+/* eslint-disable node/prefer-global/process */
+import pkg from 'eslint/use-at-your-own-risk'
+
+const { FlatESLint } = pkg
+
+  ; (async function main() {
+  const [filePath] = process.argv.slice(2)
+
+  /** @type {import('eslint/lib/eslint/flat-eslint').FlatESLint} */
+  const eslint = new FlatESLint()
+  const config = await eslint.calculateConfigForFile(filePath)
+
+  if (!config)
+    throw new Error('No config found')
+
+  if (!config.rules)
+    throw new Error('No rules found')
+
+  const ruleIds = Object.keys(config.rules)
+  const rulesMeta = eslint.getRulesMetaForResults(
+    ruleIds.map((ruleId) => {
+      return {
+        messages: [{ ruleId }],
+        filePath: '<text>',
+        suppressedMessages: [],
+      }
+    }),
+  )
+
+  console.log(JSON.stringify(rulesMeta))
+})().catch((error) => {
+  console.error(error)
+  process.exitCode = 1
+})
+
+// const rulesMetaCustom = eslint.getRulesMetaForResults([{ suppressedMessages: [], filePath: '<text>', messages: [{ ruleId: 'no-unused-vars' }] }])
+
+// CLI method
+// ./node_modules/.bin/eslint --print-config *.js
+// npx eslint --print-config lint-me.js > get-config-output.json

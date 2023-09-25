@@ -6,5 +6,6 @@ interface MetaModule { meta: ExampleMeta }
 export const load = (async ({ params: { project: projectName } }) => {
   const projectsRaw = import.meta.glob(['../../../../examples/**', '!**/example-meta.ts'], { as: 'raw', eager: true })
   const projectsMeta = import.meta.glob(['../../../../examples/**/example-meta.ts']) as Record<string, () => Promise<MetaModule>>
-  return { projectsRaw, projectsMeta, projectName }
+  const lintModulesRaw = import.meta.glob(['../../../../lint-to-load-in/*.js'], { as: 'raw', eager: true })
+  return { projectsRaw, projectsMeta, projectName, lintModulesRaw }
 }) satisfies PageLoad

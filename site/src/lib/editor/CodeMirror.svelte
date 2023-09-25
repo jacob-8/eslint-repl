@@ -52,7 +52,7 @@
     langMap,
     lint,
     lintOptions: {
-      delay: 750, // default value
+      delay: 200,
       // needsRefresh // can use when changes are made in other editor (eslint config or packages may have changed)
     },
     extensions: [

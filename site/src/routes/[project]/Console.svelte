@@ -15,7 +15,6 @@
 
   $: if (terminalEl && terminalWidth && terminalHeight) {
     const { terminal, fitAddon } = getTerminal();
-    console.log('resizing shell')
     fitAddon.fit();
     shellProcess?.resize({
       cols: terminal.cols,
