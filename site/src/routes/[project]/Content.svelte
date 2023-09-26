@@ -15,7 +15,7 @@
       <span class="i-logos-eslint text-gray-800 align--2px mr-2" />ESLint REPL
     </a>
     <a
-      href="https://github.com/jacob-8/eslint-workbench"
+      href="https://github.com/jacob-8/eslint-repl"
       target="_blank"
       class="p-3 hover:opacity-100 opacity-60 rounded"
     >

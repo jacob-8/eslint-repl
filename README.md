@@ -1,4 +1,4 @@
-# ESLint Workbench
+# ESLint REPL
 
 [![code style](https://antfu.me/badge-code-style.svg)](https://github.com/antfu/eslint-config)
 
@@ -32,12 +32,7 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 - https://webcontainers.io/api
 - [ESLint CLI](https://eslint.org/docs/latest/use/command-line-interface#-o---output-file)
 
-## BASIC TODOS TO GET STARTED
-
-- Change URL to ESLint REPL
-- add my antfu-config + Svelte issue and share
-
-## FUTURE
+## Roadmap
 
 - Add fix result, [Merge View](https://codemirror.net/try/?example=Merge%20View)
 - terminal font
