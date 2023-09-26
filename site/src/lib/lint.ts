@@ -64,7 +64,7 @@ export function convertLintResultsToDiagnostics({ rulesMeta, results }: LintResu
   return actualMessages.map(({ severity, line, column, endLine, endColumn, message, ruleId, fix }) => {
     let markClass = severity === 2 ? 'cm-lint-mark-error' : 'cm-lint-mark-warning'
     if (fix)
-      markClass += ' cm-lint-mark-fixable'
+      markClass = 'cm-lint-mark-fixable'
 
     const ruleDocsUrl = rulesMeta[ruleId!].docs?.url
     const messageString = ruleDocsUrl

@@ -34,12 +34,13 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 
 ## Roadmap
 
+- redirect home if no project exists
+- KV storage for sharing url w/ files (including package-lock.json for speed and reproducibility)
 - Add fix result, [Merge View](https://codemirror.net/try/?example=Merge%20View)
 - terminal font
 - styles shopping
-- KV storage for sharing url w/ files (including package-lock.json for speed and reproducibility)
 - add basic tutorial
 - Add AST explanation: https://www.mariokandut.com/how-to-write-custom-eslint-rule/
-- resize remembering of panels + hotkeys
 - Inspect fix action positioning on other lines
 - feed examples via server.ts file, use HMR when editing
+- resize remembering of panels + hotkeys

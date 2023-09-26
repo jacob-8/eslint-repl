@@ -79,6 +79,6 @@
     --at-apply: 'bg-yellow-600/25';
   }
   :global(.cm-lint-mark-fixable) {
-    --at-apply: 'border-t-2 border-green-600';
+    --at-apply: 'bg-green-600/25';
   }
 </style>
