@@ -1,4 +1,4 @@
-import { getTerminal } from './terminal'
+import { getTerminal } from './console/terminal'
 import { getWebContainer, projectStatus } from './webcontainer'
 
 export async function installDependencies() {

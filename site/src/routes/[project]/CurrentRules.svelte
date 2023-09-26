@@ -20,7 +20,7 @@
   );
 </script>
 
-<div class="p-2 bg-black h-full overflow-y-auto">
+<div class="p-2 bg-[var(--terminal-background)] h-full overflow-y-auto">
   {#if rulesWithViolations.length}
     <div class="text-gray-400 text-xs mb-1">Rules violated</div>
     {#each rulesWithViolations as { ruleName, docs, fixable }}

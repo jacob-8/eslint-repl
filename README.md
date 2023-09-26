@@ -37,7 +37,6 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 - redirect home if no project exists
 - KV storage for sharing url w/ files (including package-lock.json for speed and reproducibility)
 - Add fix result, [Merge View](https://codemirror.net/try/?example=Merge%20View)
-- terminal font
 - styles shopping
 - add basic tutorial
 - Add AST explanation: https://www.mariokandut.com/how-to-write-custom-eslint-rule/

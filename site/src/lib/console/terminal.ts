@@ -1,6 +1,5 @@
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
-import 'xterm/css/xterm.css'
 
 let terminal: Terminal
 let fitAddon: FitAddon
@@ -13,6 +12,7 @@ export function getTerminal() {
     convertEol: true,
     cursorBlink: true,
     disableStdin: false,
+    fontFamily: 'var(--sk-font-mono)',
   })
   fitAddon = new FitAddon()
   terminal.loadAddon(fitAddon)

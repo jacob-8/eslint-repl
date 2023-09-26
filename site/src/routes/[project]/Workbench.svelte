@@ -1,7 +1,7 @@
 <script lang="ts">
   import CurrentRules from "./CurrentRules.svelte";
   import SplitPane from "svelte-pieces/ui/SplitPane.svelte";
-  import Console from "./Console.svelte";
+  import Console from "$lib/console/Console.svelte";
   import { convertToFileSystemTree } from "$lib/filetree/convertToFileSystemTree";
   import CodeMirror from "$lib/editor/CodeMirror.svelte";
   import {
@@ -103,7 +103,7 @@
           }}
         />
       </section>
-      <section class="h-full bg-black text-gray-200 flex flex-col" slot="b">
+    <section class="h-full bg-[var(--terminal-background)] text-gray-200 flex flex-col" style="--terminal-background: hsl(0 0% 10%);--scrollbar-border-color: var(--terminal-background);" slot="b">
         <Tabs>
           <svelte:fragment slot="first">
             {#if $projectStatus !== "ready"}
