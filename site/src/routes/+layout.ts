@@ -1,7 +1,7 @@
 import type { LayoutLoad } from './$types'
 import type { ExampleMeta } from '$lib/example.interface'
 
-export const load = (async () => {
+export const load = (() => {
   return {
     lintModules: getLintModules(),
     examplesMeta: getExamplesMeta(),

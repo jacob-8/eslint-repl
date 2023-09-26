@@ -2,20 +2,18 @@
   import SplitPane from "svelte-pieces/ui/SplitPane.svelte";
   import { browser } from "$app/environment";
   import Content from "./Content.svelte";
-  import { parseExamplesMeta } from "./parseExamplesMeta";
-  // import { createSearchParamStore } from "$lib/search-param";
+  import { createSearchParamStore } from "$lib/search-param";
 
   export let data;
-  $: ({projects, meta} = parseExamplesMeta(data.examplesMeta, data.projectName));
-  // const configFocus = createSearchParamStore({ key: "config", startWith: startConfigFocus });
-  // const lintFocus = createSearchParamStore<string>({ key: "lint", startWith: data.meta.lintFocus });
+  const configFocus = createSearchParamStore({ key: "config", startWith: data.meta.lintFocus });
+  const lintFocus = createSearchParamStore<string>({ key: "lint", startWith: data.meta.lintFocus });
 </script>
 
 <div class="h-100vh" style="--scrollbar-border-color: #1e1e1e;">
   <SplitPane pos={28} min={0}>
     <section class="h-full border-r" slot="a">
       <Content 
-        projectNames={projects} 
+        projectNames={data.projects} 
         activeProjectName={data.projectName} 
         activeProjectMarkdown={data.projectFiles["README.md"]} />
     </section>
@@ -25,8 +23,8 @@
           <Workbench
             projectFiles={data.projectFiles}
             lintModules={data.lintModules}
-            lintFocus={meta.lintFocus || ''}
-            configFocus={meta.configFocus || "eslint.config.js"}
+            bind:lintFocus={$lintFocus}
+            bind:configFocus={$configFocus}
           />
         {/await}
       {/if}
