@@ -1,25 +1,15 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
   import SplitPane from "svelte-pieces/ui/SplitPane.svelte";
   import { splitIntoProjects } from "./splitIntoProjects";
+  import { createSearchParamStore } from "$lib/search-param";
 
   export let data;
   $: projects = splitIntoProjects(data.projectsRaw, data.lintModulesRaw);
   $: activeProjectName = data.projectName;
-  let lintFocus: string
-  let configFocus = 'eslint.config.js'
 
-  $: if (browser && data.projectsMeta) loadMeta()
-  async function loadMeta() {
-    const metaPromise = data.projectsMeta[`../../../../examples/${activeProjectName}/example-meta.ts`]
-    if (metaPromise) {
-      const { meta } = await metaPromise()
-      lintFocus = meta.lintFocus
-      if (meta.configFocus) {
-        configFocus = meta.configFocus
-      }
-    }
-  }
+  const startConfigFocus = data.meta.configFocus || "eslint.config.js";
+  const configFocus = createSearchParamStore({ key: "config", startWith: startConfigFocus, log: true });
+  const lintFocus = createSearchParamStore<string>({ key: "lint", startWith: data.meta.lintFocus, log: true });
 </script>
 
 <div class="h-100vh" style="--scrollbar-border-color: #1e1e1e;">
@@ -36,11 +26,16 @@
         <a
           class="uppercase p-2 mb-1 bg-gray-200"
           href={`/${name}`}
-          class:font-bold={name === activeProjectName}>{name}</a>
+          class:font-bold={name === activeProjectName}>{name}</a
+        >
       {/each}
 
       <div>
-        <a href="https://github.com/jacob-8/eslint-workbench" target="_blank" class="p-3 hover:bg-gray-100 rounded block">
+        <a
+          href="https://github.com/jacob-8/eslint-workbench"
+          target="_blank"
+          class="p-3 hover:bg-gray-100 rounded block"
+        >
           <span class="i-mdi-github text-lg text-gray-800 align--3px" /> View Repo
         </a>
       </div>
@@ -48,7 +43,11 @@
     <section class="h-full" slot="b">
       {#if lintFocus}
         {#await import("./Workbench.svelte") then { default: Workbench }}
-          <Workbench projectFiles={projects[activeProjectName]} {lintFocus} {configFocus} />
+          <Workbench
+            projectFiles={projects[activeProjectName]}
+            bind:lintFocus={$lintFocus}
+            bind:configFocus={$configFocus}
+          />
         {/await}
       {/if}
     </section>
