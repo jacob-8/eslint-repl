@@ -34,7 +34,6 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 
 ## BASIC TODOS TO GET STARTED
 
-- basic explanation text
 - Change URL to ESLint REPL
 - add my antfu-config + Svelte issue and share
 

@@ -45,6 +45,8 @@ export async function runLint(filename: string, content: string): Promise<LintRe
 
 export function lint(filename: string, content: string): NeoCodemirrorOptions['lint'] {
   return async () => {
+    if (!content)
+      return []
     await checkProjectReady()
     const lintResults = await runLint(filename, content)
     currentLintResults.set(lintResults)

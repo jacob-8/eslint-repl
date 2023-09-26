@@ -73,3 +73,8 @@ export async function read(path: string): Promise<string> {
   const vm = await getWebContainer()
   return await vm.fs.readFile(path, 'utf8')
 }
+
+export async function remove(path: string) {
+  const vm = await getWebContainer()
+  return await vm.fs.rm(path)
+}

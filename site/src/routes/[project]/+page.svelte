@@ -16,7 +16,7 @@
 
 <div class="h-100vh" style="--scrollbar-border-color: #1e1e1e;">
   <SplitPane pos={28} min={0}>
-    <section class="h-full border-r p-1" slot="a">
+    <section class="h-full border-r" slot="a">
       <Content 
         projectNames={Object.keys(projects)} 
         activeProjectName={activeProjectName} 

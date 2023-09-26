@@ -8,6 +8,7 @@
     checkProjectReady,
     initProjectInWebContainer,
     projectStatus,
+    remove,
     shellProcess,
     write,
   } from "$lib/webcontainer";
@@ -56,6 +57,10 @@
       <section class="h-full border-b border-truegray-700" slot="a">
         <Explorer
           tree={convertToFileSystemTree($files)}
+          on:add={({ detail: fileName }) => {
+            $files[fileName] = "hello";
+            $files = $files;
+          }}
           bind:lintFocus
           bind:configFocus
         />
@@ -85,6 +90,14 @@
           on:change={async ({ detail: { filename, content } }) => {
             if ($projectStatus === "booting" || $projectStatus === "mounting")
               return;
+            console.log({content})
+            if (!content) {
+              console.log('no content')
+              await remove(filename);
+              delete $files[lintFocus];
+              $files = $files;
+              return
+            }
             await write(filename, content);
             $files[lintFocus] = content;
             console.log(`[changed] ${filename}`);
