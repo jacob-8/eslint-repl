@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type { Diagnostic } from '@codemirror/lint'
 import type { ESLint, Rule } from 'eslint'
 import type { NeoCodemirrorOptions } from '@neocodemirror/svelte'
@@ -47,13 +48,14 @@ export function lint(filename: string, content: string): NeoCodemirrorOptions['l
     await checkProjectReady()
     const lintResults = await runLint(filename, content)
     currentLintResults.set(lintResults)
-    // eslint-disable-next-line no-console
     console.log({ lintResults })
     return convertLintResultsToDiagnostics(lintResults, content)
   }
 };
 
 export function convertLintResultsToDiagnostics({ rulesMeta, results }: LintResults, source: string): Diagnostic[] {
+  if (!results.length)
+    return []
   const [{ messages, output }] = results
   // console.log({ fixed: output })
   const actualMessages = messages.filter(({ ruleId }) => ruleId)
@@ -123,7 +125,7 @@ export async function getLintConfig(filename: string): Promise<RulesMeta> {
   )
 
   if (await process.exit === 1)
-    throw new Error(`rule-getting failed: ${rulesForFileString}`)
+    throw new Error(rulesForFileString)
   console.timeEnd('rule-getting')
   return JSON.parse(rulesForFileString) as RulesMeta
 }

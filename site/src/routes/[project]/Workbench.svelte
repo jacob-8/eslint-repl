@@ -21,6 +21,7 @@
   export let configFocus: string;
   export let lintFocus: string;
   let files = writable<Record<string, string>>({});
+  // $: files = createSearchParamStore<Record<string, string>>({ key: 'files', startWith: projectFiles });
 
   $: setupProject(projectFiles);
   function setupProject(_files: Record<string, string>) {
@@ -30,8 +31,10 @@
   }
 
   let rulesMeta: RulesMeta = {};
+  let rulesError = "";
   $: if (lintFocus) {
     rulesMeta = {};
+    rulesError = "";
     getLintRules();
   }
   async function getLintRules() {
@@ -39,8 +42,9 @@
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await checkProjectReady();
       rulesMeta = await getLintConfig(lintFocus);
-      console.log({ lintFocus, rulesMetaLintFocus: rulesMeta });
-    } catch (err) {
+      console.log({ rulesMeta });
+    } catch (err: any) {
+      rulesError = err.message;
       console.log(err);
     }
   }
@@ -95,6 +99,9 @@
                 Status: {$projectStatus}
               </div>
             {:else}
+              {#if rulesError}
+                <div class="text-pink p-2">{rulesError}</div>
+              {/if}
               <CurrentRules
                 filename={lintFocus}
                 {rulesMeta}

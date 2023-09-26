@@ -10,7 +10,7 @@ export default defineConfig({
         'vertical-align': 'middle',
       },
     }),
-    // presetTypography(),
+    presetTypography(),
   ],
-  // safelist: ['prose'],
+  safelist: ['prose'],
 })

@@ -34,17 +34,16 @@ Learn how to use ESLint, and even write a few rules of your own with live feedba
 
 ## BASIC TODOS TO GET STARTED
 
-- sharing URL (includes focused files)
 - basic explanation text
+- Change URL to ESLint REPL
 - add my antfu-config + Svelte issue and share
 
 ## FUTURE
 
 - Add fix result, [Merge View](https://codemirror.net/try/?example=Merge%20View)
-- ESLint Workbench or ESLint REPL?
 - terminal font
-- header
 - styles shopping
+- KV storage for sharing url w/ files (including package-lock.json for speed and reproducibility)
 - add basic tutorial
 - Add AST explanation: https://www.mariokandut.com/how-to-write-custom-eslint-rule/
 - resize remembering of panels + hotkeys

@@ -17,10 +17,10 @@ const { FlatESLint } = pkg
   const config = await eslint.calculateConfigForFile(filePath)
 
   if (!config)
-    throw new Error('No config found')
+    throw new Error(`No ESLint configuration applies to ${filePath}`)
 
   if (!config.rules)
-    throw new Error('No rules found')
+    throw new Error(`No ESLint rules apply to ${filePath}`)
 
   const ruleIds = Object.keys(config.rules)
 
@@ -37,7 +37,7 @@ const { FlatESLint } = pkg
 
   console.log(JSON.stringify(rulesMeta))
 })().catch((error) => {
-  console.error(error)
+  console.error(error.message)
   process.exitCode = 1
 })
 

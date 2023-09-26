@@ -1,3 +1,5 @@
+Write New Rule
+
 From https://github.com/antfu/eslint-plugin-antfu
 
 Other sources for info:
