@@ -1,1 +1,1 @@
-# Kitbook for ESLint Workbench
+# Kitbook for ESLint REPL
