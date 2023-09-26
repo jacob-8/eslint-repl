@@ -19,6 +19,7 @@
   import Tabs from "$lib/Tabs.svelte";
 
   export let projectFiles: Record<string, string>;
+  export let lintModules: Record<string, string>;
   export let configFocus: string;
   export let lintFocus: string;
   let files = writable<Record<string, string>>({});
@@ -27,7 +28,7 @@
   $: setupProject(projectFiles);
   function setupProject(_files: Record<string, string>) {
     $files = _files;
-    const tree = convertToFileSystemTree(_files);
+    const tree = convertToFileSystemTree({..._files, ...lintModules});
     initProjectInWebContainer(tree);
   }
 
