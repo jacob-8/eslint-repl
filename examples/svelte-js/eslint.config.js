@@ -4,15 +4,12 @@ import svelteParser from 'svelte-eslint-parser'
 
 export default [
   {
-    files: ['*.svelte'],
+    files: ['**/*.svelte'],
     plugins: {
       svelte: sveltePlugin,
     },
     languageOptions: {
       parser: svelteParser,
-      // parserOptions: {
-      //   parser: typescriptParser,
-      // },
     },
     rules: {
       'semi': ['error', 'never'],

@@ -1,0 +1,15 @@
+{
+  "name": "svelte-antfu",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^1.0.0-beta.10",
+    "@typescript-eslint/parser": "^6.7.3",
+    "eslint": "^8.41.0",
+    "eslint-define-config": "^1.23.0",
+    "eslint-plugin-svelte": "^2.29.0",
+    "svelte": "^4.2.1"
+  }
+}

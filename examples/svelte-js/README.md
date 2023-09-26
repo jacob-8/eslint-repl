@@ -1,0 +1,1 @@
+This example is not very well developed. Just a simple test of ESLint working inside of Svelte components. JavaScript in the `script` block and Svelte rules across the whole component.

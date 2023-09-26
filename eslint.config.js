@@ -8,8 +8,7 @@ export default antfu(
   // ...typescript({ componentExts: ['svelte', 'svx'] }),
   {
     ignores: [
-      'examples/basic/index.js',
-      'examples/write-new-rule/demo/**',
+      'examples/**',
       '**/.svelte-kit**',
     ],
   },

@@ -1,0 +1,1 @@
+This example is how I currently have ESLint working inside of Svelte components. Typescript in the `script` block and Svelte rules across the whole component.

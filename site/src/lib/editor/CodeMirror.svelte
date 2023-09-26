@@ -1,7 +1,6 @@
 <script lang="ts">
   // https://github.dev/PuruVJ/neocodemirror/blob/main/packages/svelte/src/index.ts
   import { codemirror, withCodemirrorInstance, type NeoCodemirrorOptions } from "@neocodemirror/svelte";
-	import { EditorView } from '@codemirror/view';
   import { js_snippets, svelte_snippets } from "./snippets";
 	import { createEventDispatcher } from 'svelte';
   import { mapOfExtensionToLanguage } from "./languages";
@@ -10,6 +9,7 @@
   export let filename: string;
   export let content: string;
   export let lint: NeoCodemirrorOptions['lint'] = undefined;
+  export let additionalExtensions: NeoCodemirrorOptions['extensions'] = [];
 
   $: lang = getLanguage(filename)
 
@@ -58,7 +58,7 @@
     extensions: [
       js_snippets, 
       svelte_snippets,
-      EditorView.lineWrapping,
+      ...additionalExtensions,
     ],
     instanceStore: cmInstance,
     // cursorPos: 0, will focus editor if set

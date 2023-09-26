@@ -51,7 +51,7 @@
   }
 </script>
 
-<SplitPane pos={30} min={0}>
+<SplitPane pos={40} min={0}>
   <section class="h-full border-r border-truegray-700 flex flex-col" slot="a">
     <SplitPane type="vertical" pos={33} min={0}>
       <section class="h-full border-b border-truegray-700" slot="a">
@@ -90,9 +90,7 @@
           on:change={async ({ detail: { filename, content } }) => {
             if ($projectStatus === "booting" || $projectStatus === "mounting")
               return;
-            console.log({content})
             if (!content) {
-              console.log('no content')
               await remove(filename);
               delete $files[lintFocus];
               $files = $files;

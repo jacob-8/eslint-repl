@@ -1,0 +1,1 @@
+This example illustrates how to use all the useful Typescript rules found in `antfu-eslint` in the `script` block of Svelte components.
