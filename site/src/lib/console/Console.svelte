@@ -34,17 +34,17 @@
 <style>
   div :global(.xterm) {
     height: 100%;
-    --sk-font-mono: 'JetBrains Mono', 'Fira Mono', monospace;
+    /* --sk-font-mono: 'JetBrains Mono', 'Fira Mono', monospace; */
   }
   div :global(.xterm .xterm-viewport) {
     background-color: var(--terminal-background) !important;
   }
 
-  @font-face {
+  /* @font-face {
     font-family: "JetBrains Mono";
     font-style: normal;
     font-weight: 400;
     src: local("JetBrains Mono-Regular"),
       url("./JetBrainsMono-Regular.woff2") format("woff2");
-  }
+  } */
 </style>
