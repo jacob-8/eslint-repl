@@ -1,9 +1,12 @@
 <script lang="ts">
+    import { createEventDispatcher } from "svelte";
   import SvelteMarkdown from "svelte-markdown";
 
   export let projectNames: string[];
   export let activeProjectName: string;
   export let activeProjectMarkdown: string;
+
+  const dispatch = createEventDispatcher<{save: null}>();
 </script>
 
 <div
@@ -14,6 +17,11 @@
     <a href="/" class="p-3 hover:underline rounded text-lg">
       <span class="i-logos-eslint text-gray-800 align--2px mr-2" />ESLint REPL
     </a>
+    <button
+      type="button"
+      class="ml-auto p-3 hover:opacity-100 opacity-60 rounded text-sm"
+      on:click={() => dispatch('save')}><span class="i-carbon-share text-lg text-gray-800 align--3px" /></button
+    >
     <a
       href="https://github.com/jacob-8/eslint-repl"
       target="_blank"
@@ -27,7 +35,8 @@
     {@const active = name === activeProjectName}
     <div class:active class="flex flex-col">
       <a
-        class="capitalize p-2 hover:bg-gray-200 rounded" class:bg-gray-100={active}
+        class="capitalize p-2 hover:bg-gray-200 rounded"
+        class:bg-gray-100={active}
         href={`/${name}`}
         class:font-bold={active}>{name}</a
       >

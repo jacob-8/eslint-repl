@@ -19,15 +19,18 @@ export const load = (async ({ parent, params: { project: projectName }, fetch })
     projectFiles = await loadExampleFiles(projectsRawPromises, projectName)
   }
   else {
-    // const result = await fetch
-    // check upstash if project exists
-    // if (true)
-    // projectFiles = {}
-    // set meta.lintFocus based off first file in projectFiles
+    try {
+      const response = await fetch(`/api/load/${projectName}`)
+      if (response.status !== 200)
+        throw new Error('Project not found')
+      const files = await response.json() as Record<string, string>
+      projectFiles = files
+      meta.lintFocus = Object.keys(files)[0]
+    }
+    catch (error) {
+      throw redirect(307, '/basic')
+    }
   }
-
-  if (!projectFiles)
-    throw redirect(307, '/basic')
 
   return { projects, projectName, projectFiles, meta }
 }) satisfies PageLoad
