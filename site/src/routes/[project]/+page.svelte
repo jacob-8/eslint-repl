@@ -6,6 +6,12 @@
   import { save } from "./save";
   import { writable } from "svelte/store";
   import { convertToFileSystemTree } from "$lib/filetree/convertToFileSystemTree";
+  import getConfigRaw from "../../../../lint-to-load-in/get-config.js?raw";
+  import runLintRaw from "../../../../lint-to-load-in/run-lint.js?raw";
+  const lintModules: Record<string, string> = {
+    "get-config.js": getConfigRaw,
+    "run-lint.js": runLintRaw,
+  };
 
   export let data;
 
@@ -13,7 +19,7 @@
   $: if (browser) setupProject(data.projectFiles);
   async function setupProject(_files: Record<string, string>) {
     $files = _files;
-    const tree = convertToFileSystemTree({ ..._files, ...data.lintModules });
+    const tree = convertToFileSystemTree({ ..._files, ...lintModules });
     const { initProjectInWebContainer } = await import("$lib/webcontainer");
     initProjectInWebContainer(tree);
   }
