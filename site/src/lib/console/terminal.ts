@@ -12,7 +12,7 @@ export function getTerminal() {
     convertEol: true,
     cursorBlink: true,
     disableStdin: false,
-    fontFamily: 'var(--sk-font-mono)',
+    // fontFamily: 'var(--sk-font-mono)',
   })
   fitAddon = new FitAddon()
   terminal.loadAddon(fitAddon)
