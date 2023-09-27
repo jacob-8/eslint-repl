@@ -20,7 +20,7 @@
 
   const configFocus = createSearchParamStore({
     key: "config",
-    startWith: data.meta.lintFocus,
+    startWith: data.meta.configFocus || "eslint.config.js",
   });
   const lintFocus = createSearchParamStore<string>({
     key: "lint",
