@@ -6,7 +6,6 @@
   import CodeMirror from "$lib/editor/CodeMirror.svelte";
   import {
     checkProjectReady,
-    initProjectInWebContainer,
     projectStatus,
     remove,
     shellProcess,
@@ -14,23 +13,13 @@
   } from "$lib/webcontainer";
   import { getLintConfig, lint, type RulesMeta } from "$lib/lint";
   import Explorer from "$lib/filetree/Explorer.svelte";
-  import { writable } from "svelte/store";
+  import type { Writable } from "svelte/store";
   import { currentViolationRuleIds } from "$lib/stores/lint-results";
   import Tabs from "$lib/Tabs.svelte";
 
-  export let projectFiles: Record<string, string>;
-  export let lintModules: Record<string, string>;
+  export let files: Writable<Record<string, string>>;
   export let configFocus: string;
   export let lintFocus: string;
-  let files = writable<Record<string, string>>({});
-  // $: files = createSearchParamStore<Record<string, string>>({ key: 'files', startWith: projectFiles });
-
-  $: setupProject(projectFiles);
-  function setupProject(_files: Record<string, string>) {
-    $files = _files;
-    const tree = convertToFileSystemTree({..._files, ...lintModules});
-    initProjectInWebContainer(tree);
-  }
 
   let rulesMeta: RulesMeta = {};
   let rulesError = "";
