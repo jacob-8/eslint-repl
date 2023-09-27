@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 import { get, writable } from 'svelte/store'
-import { decompressFromEncodedURIComponent as decode, compressToEncodedURIComponent as encode } from 'lz-string'
+import LZString from 'lz-string'
 import { page } from '$app/stores'
 import { goto } from '$app/navigation'
+
+const { decompressFromEncodedURIComponent: decode, compressToEncodedURIComponent: encode } = LZString
 
 const SSR = typeof window === 'undefined'
 
