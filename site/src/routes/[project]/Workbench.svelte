@@ -93,7 +93,7 @@
           }}
         />
       </section>
-    <section class="h-full bg-[var(--terminal-background)] text-gray-200 flex flex-col" style="--terminal-background: hsl(0 0% 10%);--scrollbar-border-color: var(--terminal-background);" slot="b">
+      <section class="h-full bg-[var(--terminal-background)] text-gray-200 flex flex-col" style="--terminal-background: hsl(0 0% 10%);--scrollbar-border-color: var(--terminal-background);" slot="b">
         <Tabs>
           <svelte:fragment slot="first">
             {#if $projectStatus !== 'ready'}

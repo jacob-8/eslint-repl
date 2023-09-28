@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher } from 'svelte'
   import SvelteMarkdown from 'svelte-markdown'
 
   export let projectNames: string[]

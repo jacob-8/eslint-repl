@@ -33,7 +33,7 @@
         {/if}
         {#if fixable}
           <span class="text-gray-200 text-sm text-bold" title={fixable}
-            >(fixable)</span
+          >(fixable)</span
           >
         {/if}
       </div>
@@ -58,7 +58,7 @@
         {/if}
         {#if fixable}
           <span class="text-gray-200 text-sm text-bold" title={fixable}
-            >(fixable)</span
+          >(fixable)</span
           >
         {/if}
       </div>

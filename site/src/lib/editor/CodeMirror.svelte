@@ -1,7 +1,7 @@
 <script lang="ts">
   // https://github.dev/PuruVJ/neocodemirror/blob/main/packages/svelte/src/index.ts
   import { type NeoCodemirrorOptions, codemirror, withCodemirrorInstance } from '@neocodemirror/svelte'
-	import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher } from 'svelte'
   import { js_snippets, svelte_snippets } from './snippets'
   import { mapOfExtensionToLanguage } from './languages'
   import { vsCodeDarkPlus } from './vs-code-dark-plus-theme'
@@ -53,7 +53,7 @@
     lint,
     lintOptions: {
       delay: 200,
-      // needsRefresh // can use when changes are made in other editor (eslint config or packages may have changed)
+    // needsRefresh // can use when changes are made in other editor (eslint config or packages may have changed)
     },
     extensions: [
       js_snippets,
@@ -61,7 +61,7 @@
       ...additionalExtensions,
     ],
     instanceStore: cmInstance,
-    // cursorPos: 0, will focus editor if set
+  // cursorPos: 0, will focus editor if set
   }}
   on:codemirror:textChange={({ detail: updatedCode }) => {
     dispatch('change', { filename, content: updatedCode })

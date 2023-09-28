@@ -58,7 +58,7 @@ export function lint(filename: string, content: string): NeoCodemirrorOptions['l
 export function convertLintResultsToDiagnostics({ rulesMeta, results }: LintResults, source: string): Diagnostic[] {
   if (!results.length)
     return []
-  const [{ messages, output }] = results
+  const [{ messages }] = results
   // console.log({ fixed: output })
   const actualMessages = messages.filter(({ ruleId }) => ruleId)
   return actualMessages.map(({ severity, line, column, endLine, endColumn, message, ruleId, fix }) => {

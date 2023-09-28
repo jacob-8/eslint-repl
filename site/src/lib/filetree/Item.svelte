@@ -16,7 +16,7 @@
   style="white-space: nowrap;"
   on:click
   on:dblclick={() => {
-    // alert('rename not implemented yet')
+  // alert('rename not implemented yet')
   }}
 >
   {#if isDirectory}
