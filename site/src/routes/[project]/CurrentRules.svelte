@@ -54,7 +54,6 @@
           <a href={docs.url} target="_blank" class="font-semibold underline">
             {ruleName}
           </a>
-          {docs.url}
           - {docs.description}
         {:else}
           <span class="font-semibold">{ruleName}</span>
