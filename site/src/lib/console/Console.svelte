@@ -1,26 +1,26 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { getTerminal } from "./terminal";
-  import type { WebContainerProcess } from "@webcontainer/api";
-  import "xterm/css/xterm.css";
+  import { onMount } from 'svelte'
+  import type { WebContainerProcess } from '@webcontainer/api'
+  import { getTerminal } from './terminal'
+  import 'xterm/css/xterm.css'
 
-  export let shellProcess: WebContainerProcess | null;
-  let terminalEl: HTMLDivElement;
-  let terminalWidth: number;
-  let terminalHeight: number;
+  export let shellProcess: WebContainerProcess | null
+  let terminalEl: HTMLDivElement
+  let terminalWidth: number
+  let terminalHeight: number
 
   onMount(async () => {
-    const { terminal } = getTerminal();
-    terminal.open(terminalEl);
-  });
+    const { terminal } = getTerminal()
+    terminal.open(terminalEl)
+  })
 
   $: if (terminalEl && terminalWidth && terminalHeight) {
-    const { terminal, fitAddon } = getTerminal();
-    fitAddon.fit();
+    const { terminal, fitAddon } = getTerminal()
+    fitAddon.fit()
     shellProcess?.resize({
       cols: terminal.cols,
       rows: terminal.rows,
-    });
+    })
   }
 </script>
 

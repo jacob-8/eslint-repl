@@ -1,14 +1,14 @@
 <script lang="ts">
-  import Item from "./Item.svelte";
+  import Item from './Item.svelte'
 
-  export let configFocus: string;
-  export let lintFocus: string;
+  export let configFocus: string
+  export let lintFocus: string
   export let path: string
-  export let depth: number;
-  $: lintSelected = lintFocus === path;
-  $: configSelected = configFocus === path;
+  export let depth: number
+  $: lintSelected = lintFocus === path
+  $: configSelected = configFocus === path
 
-  let selectMode: "lint" | "config" = "lint";
+  let selectMode: 'lint' | 'config' = 'lint'
 </script>
 
 <div
@@ -22,8 +22,9 @@
   <Item
     {path}
     on:click={() => {
-      if (selectMode === "lint") lintFocus = path;
-      else configFocus = path;
+      if (selectMode === 'lint')
+        lintFocus = path
+      else configFocus = path
     }}
   />
   {#if lintSelected}
@@ -33,7 +34,7 @@
     <div class="group-hover:hidden"><span class="i-carbon-arrow-down" /></div>
   {/if}
   <div class="hidden group-hover:block">
-    {#if selectMode === "lint"}
+    {#if selectMode === 'lint'}
       <span class="i-carbon-arrow-right" />
     {:else}
       <span class="i-carbon-arrow-down" />
@@ -43,11 +44,14 @@
 
 <svelte:window
   on:keydown={(e) => {
-    if (e.shiftKey) selectMode = "config";
+    if (e.shiftKey)
+      selectMode = 'config'
   }}
   on:keyup={(e) => {
-    if (selectMode === "lint") return;
-    if (!e.shiftKey) selectMode = "lint";
+    if (selectMode === 'lint')
+      return
+    if (!e.shiftKey)
+      selectMode = 'lint'
   }}
 />
 

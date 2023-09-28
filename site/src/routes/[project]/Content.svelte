@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
-  import SvelteMarkdown from "svelte-markdown";
+    import { createEventDispatcher } from 'svelte'
+  import SvelteMarkdown from 'svelte-markdown'
 
-  export let projectNames: string[];
-  export let activeProjectName: string;
-  export let activeProjectMarkdown: string;
+  export let projectNames: string[]
+  export let activeProjectName: string
+  export let activeProjectMarkdown: string
 
-  const dispatch = createEventDispatcher<{save: null}>();
+  const dispatch = createEventDispatcher<{ save: null }>()
 </script>
 
 <div

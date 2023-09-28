@@ -1,12 +1,12 @@
 <script lang="ts">
-  import FileIcons from "./FileIcons.svelte";
+  import FileIcons from './FileIcons.svelte'
 
-  export let path = "";
-  export let isDirectory = false;
-  export let expanded = false;
-  export let isSelected = false;
+  export let path = ''
+  export let isDirectory = false
+  export let expanded = false
+  export let isSelected = false
 
-  $: name = path.split("/").pop() || "";
+  $: name = path.split('/').pop() || ''
 </script>
 
 <button

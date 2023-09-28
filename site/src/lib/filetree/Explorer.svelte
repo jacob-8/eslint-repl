@@ -1,13 +1,13 @@
 <script lang="ts">
-  import type { FileSystemTree } from "@webcontainer/api";
-  import Folder from "./Folder.svelte";
-  import { createEventDispatcher } from "svelte";
+  import type { FileSystemTree } from '@webcontainer/api'
+  import { createEventDispatcher } from 'svelte'
+  import Folder from './Folder.svelte'
 
-  export let tree: FileSystemTree;
-  export let configFocus: string;
-  export let lintFocus: string;
+  export let tree: FileSystemTree
+  export let configFocus: string
+  export let lintFocus: string
 
-  const dispatch = createEventDispatcher<{ add: string }>();
+  const dispatch = createEventDispatcher<{ add: string }>()
 </script>
 
 <div
@@ -20,10 +20,11 @@
     type="button"
     on:click={() => {
       const fileName = prompt(
-        `What's the full path of your new file, e.g. 'foo.js' or 'src/routes/+page.svelte'?`
-      );
-      if (!fileName) return;
-      dispatch("add", fileName);
+        'What\'s the full path of your new file, e.g. \'foo.js\' or \'src/routes/+page.svelte\'?',
+      )
+      if (!fileName)
+        return
+      dispatch('add', fileName)
     }}
     class="block w-full text-left pl-[calc((var(--depth)*.6rem))] opacity-70 hover:opacity-100 hover:bg-gray-500/15"
     style="--depth: 1;"

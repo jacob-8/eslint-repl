@@ -1,23 +1,21 @@
 <script lang="ts">
-  import type { RulesMeta } from "$lib/lint";
+  import type { RulesMeta } from '$lib/lint'
 
-  export let rulesMeta: RulesMeta;
-  export let currentViolationRuleIds: string[];
-  export let filename: string;
+  export let rulesMeta: RulesMeta
+  export let currentViolationRuleIds: string[]
+  export let filename: string
 
   $: rules = Object.entries(rulesMeta).map(([ruleName, { docs, fixable }]) => ({
     ruleName,
     docs,
     fixable,
-  }));
+  }))
 
-  $: rulesWithViolations = rules.filter(({ ruleName }) =>
-    currentViolationRuleIds.includes(ruleName)
-  );
+  $: rulesWithViolations = rules.filter(({ ruleName }) => currentViolationRuleIds.includes(ruleName))
 
   $: rulesWithoutViolations = rules.filter(
-    ({ ruleName }) => !currentViolationRuleIds.includes(ruleName)
-  );
+    ({ ruleName }) => !currentViolationRuleIds.includes(ruleName),
+  )
 </script>
 
 <div class="p-2 bg-[var(--terminal-background)] h-full overflow-y-auto">

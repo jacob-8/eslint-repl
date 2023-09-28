@@ -1,42 +1,43 @@
 <script lang="ts">
-  import CurrentRules from "./CurrentRules.svelte";
-  import SplitPane from "svelte-pieces/ui/SplitPane.svelte";
-  import Console from "$lib/console/Console.svelte";
-  import { convertToFileSystemTree } from "$lib/filetree/convertToFileSystemTree";
-  import CodeMirror from "$lib/editor/CodeMirror.svelte";
+  import SplitPane from 'svelte-pieces/ui/SplitPane.svelte'
+  import type { Writable } from 'svelte/store'
+  import CurrentRules from './CurrentRules.svelte'
+  import Console from '$lib/console/Console.svelte'
+  import { convertToFileSystemTree } from '$lib/filetree/convertToFileSystemTree'
+  import CodeMirror from '$lib/editor/CodeMirror.svelte'
   import {
     checkProjectReady,
     projectStatus,
     remove,
     shellProcess,
     write,
-  } from "$lib/webcontainer";
-  import { getLintConfig, lint, type RulesMeta } from "$lib/lint";
-  import Explorer from "$lib/filetree/Explorer.svelte";
-  import type { Writable } from "svelte/store";
-  import { currentViolationRuleIds } from "$lib/stores/lint-results";
-  import Tabs from "$lib/Tabs.svelte";
+  } from '$lib/webcontainer'
+  import { type RulesMeta, getLintConfig, lint } from '$lib/lint'
+  import Explorer from '$lib/filetree/Explorer.svelte'
+  import { currentViolationRuleIds } from '$lib/stores/lint-results'
+  import Tabs from '$lib/Tabs.svelte'
 
-  export let files: Writable<Record<string, string>>;
-  export let configFocus: string;
-  export let lintFocus: string;
+  export let files: Writable<Record<string, string>>
+  export let configFocus: string
+  export let lintFocus: string
 
-  let rulesMeta: RulesMeta = {};
-  let rulesError = "";
+  let rulesMeta: RulesMeta = {}
+  let rulesError = ''
   $: if (lintFocus) {
-    rulesMeta = {};
-    rulesError = "";
-    getLintRules();
+    rulesMeta = {}
+    rulesError = ''
+    getLintRules()
   }
   async function getLintRules() {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      await checkProjectReady();
-      rulesMeta = await getLintConfig(lintFocus);
-      console.log({ rulesMeta });
-    } catch (err: any) {
-      rulesError = err.message;
-      console.log(err);
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      await checkProjectReady()
+      rulesMeta = await getLintConfig(lintFocus)
+      console.log({ rulesMeta })
+    }
+    catch (err: any) {
+      rulesError = err.message
+      console.log(err)
     }
   }
 </script>
@@ -48,8 +49,8 @@
         <Explorer
           tree={convertToFileSystemTree($files)}
           on:add={({ detail: fileName }) => {
-            $files[fileName] = "hello";
-            $files = $files;
+            $files[fileName] = 'hello'
+            $files = $files
           }}
           bind:lintFocus
           bind:configFocus
@@ -60,11 +61,11 @@
           filename={configFocus}
           content={$files[configFocus]}
           on:change={async ({ detail: { filename, content } }) => {
-            if ($projectStatus === "booting" || $projectStatus === "mounting")
-              return;
-            await write(filename, content);
-            $files[configFocus] = content;
-            console.log(`[changed] ${filename}`);
+            if ($projectStatus === 'booting' || $projectStatus === 'mounting')
+              return
+            await write(filename, content)
+            $files[configFocus] = content
+            console.log(`[changed] ${filename}`)
           }}
         />
       </section>
@@ -78,24 +79,24 @@
           content={$files[lintFocus]}
           lint={lint(lintFocus, $files[lintFocus])}
           on:change={async ({ detail: { filename, content } }) => {
-            if ($projectStatus === "booting" || $projectStatus === "mounting")
-              return;
+            if ($projectStatus === 'booting' || $projectStatus === 'mounting')
+              return
             if (!content) {
-              await remove(filename);
-              delete $files[lintFocus];
-              $files = $files;
+              await remove(filename)
+              delete $files[lintFocus]
+              $files = $files
               return
             }
-            await write(filename, content);
-            $files[lintFocus] = content;
-            console.log(`[changed] ${filename}`);
+            await write(filename, content)
+            $files[lintFocus] = content
+            console.log(`[changed] ${filename}`)
           }}
         />
       </section>
     <section class="h-full bg-[var(--terminal-background)] text-gray-200 flex flex-col" style="--terminal-background: hsl(0 0% 10%);--scrollbar-border-color: var(--terminal-background);" slot="b">
         <Tabs>
           <svelte:fragment slot="first">
-            {#if $projectStatus !== "ready"}
+            {#if $projectStatus !== 'ready'}
               <div class="font-semibold p-2">
                 Status: {$projectStatus}
               </div>
