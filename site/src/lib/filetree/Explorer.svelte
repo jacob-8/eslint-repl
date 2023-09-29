@@ -10,10 +10,7 @@
   const dispatch = createEventDispatcher<{ add: string }>()
 </script>
 
-<div
-  class="h-full bg-[--scrollbar-border-color] overflow-y-auto overflow-x-hidden text-white/70 pt-1"
-  style="--scrollbar-border-color: hsl(0, 0%, 9%);"
->
+<div class="h-full bg-[--scrollbar-border-color] overflow-y-auto overflow-x-hidden text-white/70 pt-1" style="--scrollbar-border-color: hsl(0, 0%, 9%);">
   <Folder {tree} path="" depth={0} expanded bind:lintFocus bind:configFocus />
 
   <button
@@ -27,8 +24,5 @@
       dispatch('add', fileName)
     }}
     class="block w-full text-left pl-[calc((var(--depth)*.6rem))] opacity-70 hover:opacity-100 hover:bg-gray-500/15"
-    style="--depth: 1;"
-  >
-    + add file</button
-  >
+    style="--depth: 1;">+ add file</button>
 </div>

@@ -53,8 +53,7 @@
             $files = $files
           }}
           bind:lintFocus
-          bind:configFocus
-        />
+          bind:configFocus />
       </section>
       <section class="h-full bg-black" slot="b">
         <CodeMirror
@@ -66,8 +65,7 @@
             await write(filename, content)
             $files[configFocus] = content
             console.log(`[changed] ${filename}`)
-          }}
-        />
+          }} />
       </section>
     </SplitPane>
   </section>
@@ -90,8 +88,7 @@
             await write(filename, content)
             $files[lintFocus] = content
             console.log(`[changed] ${filename}`)
-          }}
-        />
+          }} />
       </section>
       <section class="h-full bg-[var(--terminal-background)] text-gray-200 flex flex-col" style="--terminal-background: hsl(0 0% 10%);--scrollbar-border-color: var(--terminal-background);" slot="b">
         <Tabs>
@@ -107,8 +104,7 @@
               <CurrentRules
                 filename={lintFocus}
                 {rulesMeta}
-                currentViolationRuleIds={$currentViolationRuleIds}
-              />
+                currentViolationRuleIds={$currentViolationRuleIds} />
             {/if}
           </svelte:fragment>
           <svelte:fragment slot="second">

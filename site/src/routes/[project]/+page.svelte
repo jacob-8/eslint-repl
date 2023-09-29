@@ -56,8 +56,7 @@
           await save(name, $files)
           if (isExampleProject)
             window.location.assign(`/${name}`)
-        }}
-      />
+        }} />
     </section>
     <section class="h-full" slot="b">
       {#if browser}
@@ -65,8 +64,7 @@
           <Workbench
             bind:files
             bind:lintFocus={$lintFocus}
-            bind:configFocus={$configFocus}
-          />
+            bind:configFocus={$configFocus} />
         {/await}
       {/if}
     </section>

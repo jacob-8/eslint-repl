@@ -28,8 +28,7 @@
   class="w-full h-full overflow-hidden"
   bind:clientWidth={terminalWidth}
   bind:clientHeight={terminalHeight}
-  bind:this={terminalEl}
-/>
+  bind:this={terminalEl} />
 
 <style>
   div :global(.xterm) {

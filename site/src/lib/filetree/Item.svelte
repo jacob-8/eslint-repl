@@ -17,8 +17,7 @@
   on:click
   on:dblclick={() => {
   // alert('rename not implemented yet')
-  }}
->
+  }}>
   {#if isDirectory}
     {#if expanded}
       <span class="i-material-symbols-folder-open align--3px" />

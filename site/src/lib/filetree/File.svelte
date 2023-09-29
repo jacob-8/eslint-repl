@@ -17,16 +17,14 @@
   class:bg-gray-600={lintSelected}
   class:bg-blue-800={configSelected}
   class:gray-hover={selectMode === 'lint'}
-  class:blue-hover={selectMode === 'config'}
->
+  class:blue-hover={selectMode === 'config'}>
   <Item
     {path}
     on:click={() => {
       if (selectMode === 'lint')
         lintFocus = path
       else configFocus = path
-    }}
-  />
+    }} />
   {#if lintSelected}
     <div class="group-hover:hidden"><span class="i-carbon-arrow-right" /></div>
   {/if}
@@ -52,8 +50,7 @@
       return
     if (!e.shiftKey)
       selectMode = 'lint'
-  }}
-/>
+  }} />
 
 <style>
   .gray-hover {

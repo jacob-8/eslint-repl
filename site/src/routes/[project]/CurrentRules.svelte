@@ -18,9 +18,9 @@
   )
 </script>
 
-<div class="p-2 bg-[var(--terminal-background)] h-full overflow-y-auto">
+<div class="p-2 bg-black bg-[var(--terminal-background)] h-full overflow-y-auto">
   {#if rulesWithViolations.length}
-    <div class="text-gray-400 text-xs mb-1">Rules violated</div>
+    <div class="text-gray-400 text-xs mb-1">Rules Not violated</div>
     {#each rulesWithViolations as { ruleName, docs, fixable }}
       <div class:text-green-400={fixable} class:text-pink-400={!fixable}>
         {#if docs}
@@ -32,9 +32,7 @@
           <span class="font-semibold">{ruleName}</span>
         {/if}
         {#if fixable}
-          <span class="text-gray-200 text-sm text-bold" title={fixable}
-          >(fixable)</span
-          >
+          <span class="text-gray-200 text-sm text-bold" title={fixable}>(fixable)</span>
         {/if}
       </div>
     {/each}
@@ -57,9 +55,7 @@
           <span class="font-semibold">{ruleName}</span>
         {/if}
         {#if fixable}
-          <span class="text-gray-200 text-sm text-bold" title={fixable}
-          >(fixable)</span
-          >
+          <span class="text-gray-200 text-sm text-bold" title={fixable}>(fixable)</span>
         {/if}
       </div>
     {/each}

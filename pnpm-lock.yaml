@@ -29,6 +29,9 @@ importers:
       eslint-plugin-svelte:
         specifier: ^2.33.2
         version: 2.33.2(eslint@8.50.0)
+      eslint-plugin-svelte-stylistic:
+        specifier: ^0.0.4
+        version: 0.0.4(eslint@8.50.0)(typescript@5.2.2)
       lint-staged:
         specifier: ^14.0.1
         version: 14.0.1
@@ -2356,6 +2359,16 @@ packages:
   /eslint-plugin-no-only-tests@3.1.0:
     resolution: {integrity: sha512-Lf4YW/bL6Un1R6A76pRZyE1dl1vr31G/ev8UzIc/geCgFWyrKil8hVjYqWVKGB/UIGmb6Slzs9T0wNezdSVegw==}
     engines: {node: '>=5.0.0'}
+    dev: true
+
+  /eslint-plugin-svelte-stylistic@0.0.4(eslint@8.50.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-4QxTiUQBR6dRt/bBx5NXRpHvt1Sw3r1ED4Iyvi/f3/RqUVUTG/Ke02JFGbWt1QS1Fw1JD75jbyp67yBWkFcI0g==}
+    dependencies:
+      '@typescript-eslint/utils': 6.7.3(eslint@8.50.0)(typescript@5.2.2)
+    transitivePeerDependencies:
+      - eslint
+      - supports-color
+      - typescript
     dev: true
 
   /eslint-plugin-svelte@2.33.2(eslint@8.50.0):

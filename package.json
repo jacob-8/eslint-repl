@@ -19,6 +19,7 @@
     "eslint": "^8.50.0",
     "eslint-define-config": "^1.23.0",
     "eslint-plugin-svelte": "^2.33.2",
+    "eslint-plugin-svelte-stylistic": "^0.0.4",
     "lint-staged": "^14.0.1",
     "simple-git-hooks": "^2.9.0",
     "typescript": "~5.2.2",

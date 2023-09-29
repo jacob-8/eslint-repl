@@ -8,7 +8,7 @@
 
   export let filename: string
   export let content: string
-  export let lint: NeoCodemirrorOptions['lint']
+  export let lint: NeoCodemirrorOptions['lint'] = undefined
   export let additionalExtensions: NeoCodemirrorOptions['extensions'] = []
 
   $: lang = getLanguage(filename)
@@ -42,7 +42,8 @@
   const dispatch = createEventDispatcher<{ change: { filename: string; content: string } }>()
 </script>
 
-<div class="h-full"
+<div
+  class="h-full"
   use:codemirror={{
     value: content,
     documentId: filename,
@@ -65,8 +66,7 @@
   }}
   on:codemirror:textChange={({ detail: updatedCode }) => {
     dispatch('change', { filename, content: updatedCode })
-  }}
-/>
+  }} />
 
 <style>
   :global(.cm-editor) {

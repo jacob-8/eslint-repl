@@ -18,10 +18,7 @@
 </script>
 
 {#if path}
-  <div
-    class="flex hover:bg-gray-500/25 pl-[calc((var(--depth)*.6rem))]"
-    style="--depth: {depth};"
-  >
+  <div class="flex hover:bg-gray-500/25 pl-[calc((var(--depth)*.6rem))]" style="--depth: {depth};">
     <Item {path} {expanded} isDirectory on:click={() => (expanded = !expanded)}>
       <!-- <svelte:fragment slot="buttons">
         <button
@@ -46,8 +43,7 @@
             depth={depth + 1}
             {expanded}
             bind:lintFocus
-            bind:configFocus
-          />
+            bind:configFocus />
         </li>
       {/if}
     {/each}
@@ -58,8 +54,7 @@
             path="{pathWithSlash}{name}"
             depth={depth + 1}
             bind:lintFocus
-            bind:configFocus
-          />
+            bind:configFocus />
         </li>
       {/if}
     {/each}

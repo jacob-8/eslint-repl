@@ -11,8 +11,7 @@
 
 <div
   class="h-full overflow-y-auto p-1"
-  style="--scrollbar-border-color: hsl(0, 0%, 100%);"
->
+  style="--scrollbar-border-color: hsl(0, 0%, 100%);">
   <div class="font-semibold flex justify-between items-center">
     <a href="/" class="p-3 hover:underline rounded text-lg">
       <span class="i-logos-eslint text-gray-800 align--2px mr-2" />ESLint REPL
@@ -20,13 +19,11 @@
     <button
       type="button"
       class="ml-auto p-3 hover:opacity-100 opacity-60 rounded text-sm"
-      on:click={() => dispatch('save')}><span class="i-carbon-share text-lg text-gray-800 align--3px" /></button
-    >
+      on:click={() => dispatch('save')}><span class="i-carbon-share text-lg text-gray-800 align--3px" /></button>
     <a
       href="https://github.com/jacob-8/eslint-repl"
       target="_blank"
-      class="p-3 hover:opacity-100 opacity-60 rounded"
-    >
+      class="p-3 hover:opacity-100 opacity-60 rounded">
       <span class="i-mdi-github text-lg text-gray-800 align--3px" />
     </a>
   </div>
@@ -38,8 +35,7 @@
         class="capitalize p-2 hover:bg-gray-200 rounded"
         class:bg-gray-100={active}
         href={`/${name}`}
-        class:font-bold={active}>{name}</a
-      >
+        class:font-bold={active}>{name}</a>
 
       {#if active}
         <div class="px-2 prose">
